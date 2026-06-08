@@ -920,6 +920,484 @@
                 font-size: 0.85rem;
             }
         }
+
+        /* Profile & Tab Layout */
+        .profile-header-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(30, 41, 59, 0.25);
+            border: 1px solid var(--glass-border);
+            padding: 16px 20px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+        }
+        
+        .active-profile-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .avatar-circle {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-transform: uppercase;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.2);
+        }
+        
+        .profile-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+        
+        .profile-name {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        
+        .btn-primary-sm, .btn-secondary-sm {
+            padding: 8px 14px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Outfit', sans-serif;
+        }
+        
+        .btn-primary-sm {
+            background: linear-gradient(135deg, var(--primary) 0%, #4f46e5 100%);
+            border: none;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+        }
+        
+        .btn-primary-sm:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 15px rgba(99, 102, 241, 0.3);
+            filter: brightness(1.1);
+        }
+        
+        .btn-secondary-sm {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            color: var(--text-muted);
+        }
+        
+        .btn-secondary-sm:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+        
+        /* Tabs Styling */
+        .tab-header {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 10px;
+        }
+        
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: 8px;
+        }
+        
+        .tab-btn:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .tab-btn.active {
+            color: var(--secondary);
+            background: rgba(20, 184, 166, 0.06);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Stats Tab Styling */
+        .stats-overview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-mini-card {
+            background: rgba(30, 41, 59, 0.25);
+            border: 1px solid var(--glass-border);
+            padding: 16px;
+            border-radius: 14px;
+            text-align: center;
+        }
+        
+        .stat-mini-val {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+        
+        .stat-mini-lbl {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .stats-detailed-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 20px;
+        }
+        
+        .section-title-sm {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+            padding-bottom: 6px;
+        }
+        
+        .leaderboard-container, .mastery-container {
+            background: rgba(30, 41, 59, 0.15);
+            border: 1px solid var(--glass-border);
+            padding: 20px;
+            border-radius: 16px;
+        }
+        
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+            color: #e2e8f0;
+        }
+        
+        .leaderboard-table th {
+            text-align: left;
+            padding: 8px 6px;
+            color: var(--text-muted);
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .leaderboard-table td {
+            padding: 8px 6px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+        
+        .leaderboard-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .leaderboard-table tr.highlight td {
+            color: var(--secondary);
+            font-weight: 700;
+        }
+        
+        .mastery-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        
+        /* Custom Scrollbar for mastery list */
+        .mastery-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .mastery-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.01);
+        }
+        .mastery-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 2px;
+        }
+        
+        .mastery-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        
+        .mastery-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .mastery-name {
+            color: #cbd5e1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 170px;
+        }
+        
+        .mastery-val {
+            color: var(--secondary);
+        }
+        
+        .mastery-bar-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .mastery-bar {
+            height: 100%;
+            background: var(--secondary);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.6s ease;
+        }
+        
+        /* Modal Backdrop & Cards */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 200;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-backdrop.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .modal-card {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--card-radius);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            width: 90%;
+            max-width: 400px;
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .modal-backdrop.active .modal-card {
+            transform: scale(1);
+        }
+        
+        .modal-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        
+        .modal-body {
+            margin-bottom: 25px;
+        }
+        
+        .modal-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            outline: none;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+        
+        .modal-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.15);
+        }
+        
+        .modal-error {
+            color: var(--accent);
+            font-size: 0.75rem;
+            margin-top: 6px;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .btn-cancel, .btn-confirm {
+            padding: 10px 18px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .btn-cancel {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            color: var(--text-muted);
+        }
+        
+        .btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+        }
+        
+        .btn-confirm {
+            background: var(--secondary);
+            border: none;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(20, 184, 166, 0.2);
+        }
+        
+        .btn-confirm:hover {
+            filter: brightness(1.1);
+            transform: translateY(-1px);
+        }
+        
+        /* Profiles selector list inside modal */
+        .profiles-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .profile-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .profile-item:hover {
+            background: rgba(99, 102, 241, 0.06);
+            border-color: var(--primary);
+        }
+        
+        .profile-item.active {
+            background: rgba(20, 184, 166, 0.08);
+            border-color: var(--secondary);
+        }
+        
+        .profile-item-name {
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 0.9rem;
+        }
+        
+        .btn-delete-profile {
+            background: none;
+            border: none;
+            color: var(--accent);
+            cursor: pointer;
+            opacity: 0.6;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            padding: 4px;
+        }
+        
+        .btn-delete-profile:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* Additional Media Queries for Profile widgets */
+        @media (max-width: 600px) {
+            .stats-overview-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .stats-detailed-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .profile-header-card {
+                flex-direction: column;
+                gap: 12px;
+                align-items: stretch;
+                text-align: center;
+            }
+            .active-profile-info {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .profile-header-card div[style*="display: flex"] {
+                justify-content: center;
+            }
+            .mastery-name {
+                max-width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -941,59 +1419,131 @@
                 <h1>Partiel QSE - Entraînement</h1>
                 <p class="subtitle">Préparez efficacement vos partiels de MPI grâce à un outil d'entraînement professionnel basé sur l'ensemble de vos livrets de cours.</p>
                 
-                <div class="settings-section">
-                    <div class="section-title">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                        Choisir le Mode d'Entraînement
+                <!-- Profile Section -->
+                <div class="profile-header-card">
+                    <div class="active-profile-info">
+                        <div class="avatar-circle" id="profile-avatar">?</div>
+                        <div>
+                            <div class="profile-label">Profil actif</div>
+                            <div class="profile-name" id="active-profile-name">Aucun profil</div>
+                        </div>
                     </div>
-                    <div class="mode-selector">
-                        <div class="mode-btn active" id="mode-study" onclick="setMode('study')">
-                            <h3>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-                                Mode Entraînement
-                            </h3>
-                            <p>Idéal pour apprendre. Correction instantanée après chaque question et explications issues des livrets de cours.</p>
-                        </div>
-                        <div class="mode-btn" id="mode-exam" onclick="setMode('exam')">
-                            <h3>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                                Mode Examen
-                            </h3>
-                            <p>Test chronométré. Score et bilan de correction uniquement à la fin du QCM pour tester ses connaissances réelles.</p>
-                        </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn-secondary-sm" onclick="showProfileSelector()">Changer de profil</button>
+                        <button class="btn-primary-sm" onclick="showCreateProfileModal()">+ Nouveau</button>
                     </div>
                 </div>
 
-                <div class="settings-section">
-                    <div class="section-title">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
-                        Sélectionner les Modules de Cours
-                    </div>
-                    <div class="quick-select-buttons">
-                        <button class="btn-text" onclick="toggleAllModules(true)">Tout Sélectionner</button>
-                        <span style="color: var(--text-muted); font-size: 0.8rem;">|</span>
-                        <button class="btn-text" onclick="toggleAllModules(false)">Tout Désélectionner</button>
-                    </div>
-                    
-                    <div class="modules-grid" id="modules-list">
-                        <!-- Populated by JavaScript -->
-                    </div>
+                <!-- Tabs Navigation -->
+                <div class="tab-header">
+                    <button class="tab-btn active" id="tab-btn-quiz" onclick="switchWelcomeTab('quiz')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                        Entraînement
+                    </button>
+                    <button class="tab-btn" id="tab-btn-stats" onclick="switchWelcomeTab('stats')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                        Scores & Progression
+                    </button>
                 </div>
 
-                <div class="settings-section">
-                    <div class="section-title">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><circle cx="9" cy="9" r="2"></circle><circle cx="15" cy="15" r="2"></circle></svg>
-                        Nombre de Questions
+                <!-- Tab 1: Quiz Configuration -->
+                <div id="tab-content-quiz" class="tab-content active">
+                    <div class="settings-section">
+                        <div class="section-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                            Choisir le Mode d'Entraînement
+                        </div>
+                        <div class="mode-selector">
+                            <div class="mode-btn active" id="mode-study" onclick="setMode('study')">
+                                <h3>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                                    Mode Entraînement
+                                </h3>
+                                <p>Idéal pour apprendre. Correction instantanée après chaque question et explications issues des livrets de cours.</p>
+                            </div>
+                            <div class="mode-btn" id="mode-exam" onclick="setMode('exam')">
+                                <h3>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                    Mode Examen
+                                </h3>
+                                <p>Test chronométré. Score et bilan de correction uniquement à la fin du QCM pour tester ses connaissances réelles.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="question-count-selector">
-                        <div class="slider-container">
-                            <input type="range" id="question-count-slider" min="10" max="40" step="5" value="20" oninput="updateQuestionCountLabel()">
-                            <span class="slider-value" id="question-count-label">20 questions</span>
+
+                    <div class="settings-section">
+                        <div class="section-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+                            Sélectionner les Modules de Cours
+                        </div>
+                        <div class="quick-select-buttons">
+                            <button class="btn-text" onclick="toggleAllModules(true)">Tout Sélectionner</button>
+                            <span style="color: var(--text-muted); font-size: 0.8rem;">|</span>
+                            <button class="btn-text" onclick="toggleAllModules(false)">Tout Désélectionner</button>
+                        </div>
+                        
+                        <div class="modules-grid" id="modules-list">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <div class="section-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><circle cx="9" cy="9" r="2"></circle><circle cx="15" cy="15" r="2"></circle></svg>
+                            Nombre de Questions
+                        </div>
+                        <div class="question-count-selector">
+                            <div class="slider-container">
+                                <input type="range" id="question-count-slider" min="10" max="40" step="5" value="20" oninput="updateQuestionCountLabel()">
+                                <span class="slider-value" id="question-count-label">20 questions</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn-primary" id="start-btn" onclick="startQuiz()">Lancer l'entraînement</button>
+                </div>
+
+                <!-- Tab 2: Stats & Leaderboard -->
+                <div id="tab-content-stats" class="tab-content">
+                    <div class="stats-overview-grid">
+                        <div class="stat-mini-card">
+                            <div class="stat-mini-val" id="stats-total-quizzes">0</div>
+                            <div class="stat-mini-lbl">Quiz complétés</div>
+                        </div>
+                        <div class="stat-mini-card">
+                            <div class="stat-mini-val" id="stats-avg-score">0%</div>
+                            <div class="stat-mini-lbl">Réussite moyenne</div>
+                        </div>
+                        <div class="stat-mini-card">
+                            <div class="stat-mini-val" id="stats-total-time">0m</div>
+                            <div class="stat-mini-lbl">Temps total</div>
+                        </div>
+                    </div>
+
+                    <div class="stats-detailed-grid">
+                        <div class="leaderboard-container">
+                            <div class="section-title-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                                Classement Local (Top 10)
+                            </div>
+                            <div style="overflow-x: auto;">
+                                <table class="leaderboard-table" id="leaderboard-body">
+                                    <!-- Populated dynamically -->
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="mastery-container">
+                            <div class="section-title-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                Maîtrise par Module
+                            </div>
+                            <div class="mastery-list" id="mastery-list">
+                                <!-- Populated dynamically -->
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <button class="btn-primary" id="start-btn" onclick="startQuiz()">Lancer l'entraînement</button>
             </div>
 
             <!-- 2. QUIZ VIEW -->
@@ -1097,6 +1647,36 @@
                 <button class="btn-primary" style="margin-top: 30px;" onclick="restartQuiz()">Recommencer une série</button>
             </div>
 
+        </div>
+    </div>
+
+    <!-- Modal Backdrop: Create Profile -->
+    <div class="modal-backdrop" id="profile-modal">
+        <div class="modal-card">
+            <h3 class="modal-title">Créer un profil</h3>
+            <div class="modal-body">
+                <input type="text" id="profile-name-input" class="modal-input" placeholder="Ex: Augustin" maxlength="15" onkeydown="if(event.key==='Enter') saveNewProfile()">
+                <div class="modal-error" id="profile-modal-error"></div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeProfileModal()">Annuler</button>
+                <button class="btn-confirm" onclick="saveNewProfile()">Créer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Backdrop: Selector -->
+    <div class="modal-backdrop" id="selector-modal">
+        <div class="modal-card">
+            <h3 class="modal-title">Choisir un profil</h3>
+            <div class="modal-body">
+                <div class="profiles-list" id="modal-profiles-list">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" style="width: 100%;" onclick="closeSelectorModal()">Fermer</button>
+            </div>
         </div>
     </div>
 
@@ -2519,9 +3099,413 @@
             return array;
         }
 
+        // Profiles state variables
+        let profiles = [];
+        let activeProfile = null;
+        let activeTab = 'quiz';
+
+        // Load profiles from LocalStorage
+        function loadProfiles() {
+            try {
+                const storedProfiles = localStorage.getItem('qse_profiles');
+                profiles = storedProfiles ? JSON.parse(storedProfiles) : [];
+                
+                const storedActiveId = localStorage.getItem('qse_active_id');
+                if (storedActiveId && profiles.some(p => p.id === storedActiveId)) {
+                    activeProfile = profiles.find(p => p.id === storedActiveId);
+                } else if (profiles.length > 0) {
+                    activeProfile = profiles[0];
+                    localStorage.setItem('qse_active_id', activeProfile.id);
+                } else {
+                    activeProfile = null;
+                }
+            } catch (e) {
+                console.error("Error loading profiles", e);
+                profiles = [];
+                activeProfile = null;
+            }
+            updateProfileUI();
+        }
+
+        // Update the Profile info shown in the UI
+        function updateProfileUI() {
+            const nameEl = document.getElementById('active-profile-name');
+            const avatarEl = document.getElementById('profile-avatar');
+            
+            if (activeProfile) {
+                nameEl.textContent = activeProfile.name;
+                avatarEl.textContent = activeProfile.name.charAt(0);
+                loadProfileStats();
+            } else {
+                nameEl.textContent = "Aucun profil";
+                avatarEl.textContent = "?";
+                clearStatsUI();
+            }
+            updateSelectedModules();
+        }
+
+        function clearStatsUI() {
+            document.getElementById('stats-total-quizzes').textContent = "0";
+            document.getElementById('stats-avg-score').textContent = "0%";
+            document.getElementById('stats-total-time').textContent = "0m";
+            document.getElementById('leaderboard-body').innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:20px 0;">Créez un profil pour commencer</td></tr>';
+            populateBlankMastery();
+        }
+        
+        function populateBlankMastery() {
+            const list = document.getElementById('mastery-list');
+            list.innerHTML = '';
+            const modules = [...new Set(questionsDB.map(q => q.module))].sort();
+            modules.forEach(m => {
+                list.innerHTML += `
+                    <div class="mastery-item">
+                        <div class="mastery-meta">
+                            <span class="mastery-name" title="${m}">${m}</span>
+                            <span class="mastery-val">0%</span>
+                        </div>
+                        <div class="mastery-bar-container">
+                            <div class="mastery-bar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function loadProfileStats() {
+            if (!activeProfile) return;
+            
+            const profileId = activeProfile.id;
+            
+            // 1. Load history
+            let history = [];
+            try {
+                const storedHistory = localStorage.getItem(`qse_history_${profileId}`);
+                history = storedHistory ? JSON.parse(storedHistory) : [];
+            } catch (e) {
+                console.error(e);
+            }
+            
+            const totalQuizzes = history.length;
+            document.getElementById('stats-total-quizzes').textContent = totalQuizzes;
+            
+            let avgScore = 0;
+            let totalTimeSeconds = 0;
+            
+            if (totalQuizzes > 0) {
+                const totalScorePct = history.reduce((sum, item) => sum + (item.score / item.total), 0);
+                avgScore = Math.round((totalScorePct / totalQuizzes) * 100);
+                totalTimeSeconds = history.reduce((sum, item) => sum + item.timeSeconds, 0);
+            }
+            
+            document.getElementById('stats-avg-score').textContent = avgScore + "%";
+            
+            if (totalTimeSeconds < 60) {
+                document.getElementById('stats-total-time').textContent = totalTimeSeconds + "s";
+            } else {
+                const mins = Math.floor(totalTimeSeconds / 60);
+                const hrs = Math.floor(mins / 60);
+                if (hrs > 0) {
+                    document.getElementById('stats-total-time').textContent = `${hrs}h ${mins % 60}m`;
+                } else {
+                    document.getElementById('stats-total-time').textContent = `${mins}m`;
+                }
+            }
+            
+            // 2. Load mastery
+            let mastery = {};
+            try {
+                const storedMastery = localStorage.getItem(`qse_mastery_${profileId}`);
+                mastery = storedMastery ? JSON.parse(storedMastery) : {};
+            } catch (e) {
+                console.error(e);
+            }
+            
+            const list = document.getElementById('mastery-list');
+            list.innerHTML = '';
+            
+            const modules = [...new Set(questionsDB.map(q => q.module))].sort();
+            modules.forEach(m => {
+                const data = mastery[m] || { correctCount: 0, totalAttempts: 0 };
+                const pct = data.totalAttempts > 0 ? Math.round((data.correctCount / data.totalAttempts) * 100) : 0;
+                
+                let barColor = 'var(--accent)';
+                if (pct >= 75) {
+                    barColor = 'var(--success)';
+                } else if (pct >= 40) {
+                    barColor = 'var(--warning)';
+                }
+                
+                list.innerHTML += `
+                    <div class="mastery-item">
+                        <div class="mastery-meta">
+                            <span class="mastery-name" title="${m}">${m}</span>
+                            <span class="mastery-val" style="color: ${barColor}">${pct}%</span>
+                        </div>
+                        <div class="mastery-bar-container">
+                            <div class="mastery-bar" style="width: ${pct}%; background-color: ${barColor};"></div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // 3. Render leaderboard
+            renderLeaderboard();
+        }
+
+        function renderLeaderboard() {
+            const body = document.getElementById('leaderboard-body');
+            body.innerHTML = '';
+            
+            let allScores = [];
+            
+            profiles.forEach(p => {
+                try {
+                    const storedHistory = localStorage.getItem(`qse_history_${p.id}`);
+                    const history = storedHistory ? JSON.parse(storedHistory) : [];
+                    history.forEach(run => {
+                        allScores.push({
+                            profileName: p.name,
+                            profileId: p.id,
+                            score: run.score,
+                            total: run.total,
+                            pct: Math.round((run.score / run.total) * 100),
+                            timeSeconds: run.timeSeconds,
+                            date: new Date(run.date)
+                        });
+                    });
+                } catch (e) {
+                    console.error(e);
+                }
+            });
+            
+            allScores.sort((a, b) => {
+                if (b.pct !== a.pct) return b.pct - a.pct;
+                if (a.timeSeconds !== b.timeSeconds) return a.timeSeconds - b.timeSeconds;
+                return b.date - a.date;
+            });
+            
+            const top10 = allScores.slice(0, 10);
+            
+            if (top10.length === 0) {
+                body.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding: 20px 0;">Aucun score enregistré</td></tr>';
+                return;
+            }
+            
+            body.innerHTML = `
+                <tr>
+                    <th style="width: 10%;">#</th>
+                    <th style="width: 45%;">Profil</th>
+                    <th style="width: 25%;">Score</th>
+                    <th style="width: 20%;">Temps</th>
+                </tr>
+            `;
+            
+            top10.forEach((run, idx) => {
+                const highlightClass = (activeProfile && run.profileId === activeProfile.id) ? 'class="highlight"' : '';
+                const min = Math.floor(run.timeSeconds / 60);
+                const sec = run.timeSeconds % 60;
+                const timeStr = `${min}m ${sec}s`;
+                
+                body.innerHTML += `
+                    <tr ${highlightClass}>
+                        <td><strong>${idx + 1}</strong></td>
+                        <td>${run.profileName}</td>
+                        <td>${run.score}/${run.total} (${run.pct}%)</td>
+                        <td>${timeStr}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Modals management
+        function showCreateProfileModal() {
+            const modal = document.getElementById('profile-modal');
+            const input = document.getElementById('profile-name-input');
+            const error = document.getElementById('profile-modal-error');
+            
+            input.value = '';
+            error.textContent = '';
+            error.style.display = 'none';
+            modal.classList.add('active');
+            input.focus();
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profile-modal').classList.remove('active');
+        }
+
+        function saveNewProfile() {
+            const input = document.getElementById('profile-name-input');
+            const error = document.getElementById('profile-modal-error');
+            const name = input.value.trim();
+            
+            if (name.length === 0) {
+                error.textContent = "Le nom ne peut pas être vide.";
+                error.style.display = 'block';
+                return;
+            }
+            
+            if (name.length > 15) {
+                error.textContent = "Le nom doit faire moins de 15 caractères.";
+                error.style.display = 'block';
+                return;
+            }
+            
+            if (profiles.some(p => p.name.toLowerCase() === name.toLowerCase())) {
+                error.textContent = "Ce profil existe déjà.";
+                error.style.display = 'block';
+                return;
+            }
+            
+            const newProfile = {
+                id: 'prof_' + Date.now(),
+                name: name,
+                createdAt: new Date().toISOString()
+            };
+            
+            profiles.push(newProfile);
+            localStorage.setItem('qse_profiles', JSON.stringify(profiles));
+            
+            activeProfile = newProfile;
+            localStorage.setItem('qse_active_id', newProfile.id);
+            
+            closeProfileModal();
+            updateProfileUI();
+        }
+
+        function showProfileSelector() {
+            const modal = document.getElementById('selector-modal');
+            const list = document.getElementById('modal-profiles-list');
+            list.innerHTML = '';
+            
+            if (profiles.length === 0) {
+                list.innerHTML = '<div style="text-align:center; color:var(--text-muted); padding:10px 0;">Aucun profil existant.</div>';
+            } else {
+                profiles.forEach(p => {
+                    const activeClass = (activeProfile && p.id === activeProfile.id) ? 'active' : '';
+                    list.innerHTML += `
+                        <div class="profile-item ${activeClass}" onclick="selectProfile('${p.id}')">
+                            <span class="profile-item-name">${p.name}</span>
+                            <button class="btn-delete-profile" onclick="deleteProfile(event, '${p.id}')" title="Supprimer ce profil">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                            </button>
+                        </div>
+                    `;
+                });
+            }
+            
+            modal.classList.add('active');
+        }
+
+        function closeSelectorModal() {
+            document.getElementById('selector-modal').classList.remove('active');
+        }
+
+        function selectProfile(id) {
+            const found = profiles.find(p => p.id === id);
+            if (found) {
+                activeProfile = found;
+                localStorage.setItem('qse_active_id', id);
+                updateProfileUI();
+            }
+            closeSelectorModal();
+        }
+
+        function deleteProfile(event, id) {
+            event.stopPropagation();
+            
+            const found = profiles.find(p => p.id === id);
+            if (!found) return;
+            
+            if (confirm(`Voulez-vous vraiment supprimer le profil de "${found.name}" ainsi que toute sa progression ? Cette action est irréversible.`)) {
+                profiles = profiles.filter(p => p.id !== id);
+                localStorage.setItem('qse_profiles', JSON.stringify(profiles));
+                
+                localStorage.removeItem(`qse_history_${id}`);
+                localStorage.removeItem(`qse_mastery_${id}`);
+                
+                if (activeProfile && activeProfile.id === id) {
+                    if (profiles.length > 0) {
+                        activeProfile = profiles[0];
+                        localStorage.setItem('qse_active_id', activeProfile.id);
+                    } else {
+                        activeProfile = null;
+                        localStorage.removeItem('qse_active_id');
+                    }
+                }
+                
+                updateProfileUI();
+                showProfileSelector();
+            }
+        }
+
+        function switchWelcomeTab(tab) {
+            activeTab = tab;
+            
+            document.getElementById('tab-btn-quiz').classList.toggle('active', tab === 'quiz');
+            document.getElementById('tab-btn-stats').classList.toggle('active', tab === 'stats');
+            
+            document.getElementById('tab-content-quiz').classList.toggle('active', tab === 'quiz');
+            document.getElementById('tab-content-stats').classList.toggle('active', tab === 'stats');
+            
+            if (tab === 'stats' && activeProfile) {
+                loadProfileStats();
+            }
+        }
+
+        function saveQuizResult(score, total, timeSeconds) {
+            if (!activeProfile) return;
+            
+            const profileId = activeProfile.id;
+            
+            let history = [];
+            try {
+                const storedHistory = localStorage.getItem(`qse_history_${profileId}`);
+                history = storedHistory ? JSON.parse(storedHistory) : [];
+            } catch (e) {
+                console.error(e);
+            }
+            
+            const selectedModulesNames = [...new Set(activeQuestions.map(q => q.module))];
+            
+            const newRun = {
+                date: new Date().toISOString(),
+                mode: currentMode,
+                score: score,
+                total: total,
+                timeSeconds: timeSeconds,
+                modules: selectedModulesNames
+            };
+            
+            history.push(newRun);
+            localStorage.setItem(`qse_history_${profileId}`, JSON.stringify(history));
+            
+            let mastery = {};
+            try {
+                const storedMastery = localStorage.getItem(`qse_mastery_${profileId}`);
+                mastery = storedMastery ? JSON.parse(storedMastery) : {};
+            } catch (e) {
+                console.error(e);
+            }
+            
+            results.forEach(res => {
+                const moduleName = res.questionObj.module;
+                if (!mastery[moduleName]) {
+                    mastery[moduleName] = { correctCount: 0, totalAttempts: 0 };
+                }
+                mastery[moduleName].totalAttempts++;
+                if (res.isCorrect) {
+                    mastery[moduleName].correctCount++;
+                }
+            });
+            
+            localStorage.setItem(`qse_mastery_${profileId}`, JSON.stringify(mastery));
+        }
+
         // Initialize App
         document.addEventListener('DOMContentLoaded', () => {
             setupAudioToggle();
+            loadProfiles();
             populateModulesList();
         });
 
@@ -2582,6 +3566,9 @@
             if (selectedModules.length === 0) {
                 startBtn.disabled = true;
                 startBtn.textContent = 'Sélectionnez au moins un module';
+            } else if (!activeProfile) {
+                startBtn.disabled = true;
+                startBtn.textContent = 'Créez un profil pour commencer';
             } else if (selectedModules.length === 1) {
                 startBtn.disabled = false;
                 startBtn.textContent = "Lancer l'entraînement";
@@ -2614,6 +3601,10 @@
         }
 
         function startQuiz() {
+            if (!activeProfile) {
+                alert("Veuillez sélectionner ou créer un profil pour commencer.");
+                return;
+            }
             // Filter questions based on selected modules
             let pool = questionsDB.filter(q => selectedModules.includes(q.module));
             
@@ -2854,6 +3845,10 @@
             const min = Math.floor(elapsedMs / 60000);
             const sec = Math.floor((elapsedMs % 60000) / 1000);
             document.getElementById('stat-time').textContent = `${min}m ${sec}s`;
+
+            // Save results to user profile
+            const elapsedSeconds = Math.round(elapsedMs / 1000);
+            saveQuizResult(score, total, elapsedSeconds);
 
             // Other stats
             document.getElementById('stat-correct').textContent = score;
