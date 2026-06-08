@@ -1,0 +1,2799 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QCM d'Entraînement - Qualité, Sécurité & Environnement</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #090d16 0%, #111827 50%, #0c1020 100%);
+            --primary: #6366f1; /* Indigo */
+            --primary-hover: #4f46e5;
+            --secondary: #14b8a6; /* Teal */
+            --accent: #f43f5e; /* Rose */
+            --success: #10b981; /* Emerald */
+            --warning: #f59e0b; /* Amber */
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(15, 23, 42, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-glow: rgba(99, 102, 241, 0.15);
+            --card-radius: 20px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient background glow elements */
+        .ambient-glow-1 {
+            position: fixed;
+            top: 10%;
+            left: 10%;
+            width: 40vw;
+            height: 40vw;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+            z-index: -1;
+            pointer-events: none;
+            animation: pulse 10s infinite alternate;
+        }
+
+        .ambient-glow-2 {
+            position: fixed;
+            bottom: 10%;
+            right: 10%;
+            width: 35vw;
+            height: 35vw;
+            background: radial-gradient(circle, rgba(20, 184, 166, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+            z-index: -1;
+            pointer-events: none;
+            animation: pulse 12s infinite alternate-reverse;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.15) translate(2%, 2%); }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            z-index: 1;
+        }
+
+        /* Glassmorphism main card */
+        .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--card-radius);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            padding: 40px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        /* Typography & Layouts */
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            text-align: center;
+            font-size: 1.05rem;
+            margin-bottom: 35px;
+            line-height: 1.5;
+        }
+
+        /* Welcome view styles */
+        .settings-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mode-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .mode-btn {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1.5px solid var(--glass-border);
+            padding: 20px;
+            border-radius: 16px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: left;
+            position: relative;
+        }
+
+        .mode-btn:hover {
+            border-color: rgba(99, 102, 241, 0.5);
+            background: rgba(30, 41, 59, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .mode-btn.active {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.08);
+            color: #ffffff;
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.15);
+        }
+
+        .mode-btn h3 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mode-btn p {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            color: var(--text-muted);
+        }
+
+        .mode-btn.active p {
+            color: #cbd5e1;
+        }
+
+        /* Modules grid selection */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        /* Custom Scrollbar for modules list */
+        .modules-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+        .modules-grid::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 3px;
+        }
+        .modules-grid::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+        .modules-grid::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .module-checkbox {
+            display: none;
+        }
+
+        .module-label {
+            display: flex;
+            align-items: center;
+            background: rgba(30, 41, 59, 0.3);
+            border: 1px solid var(--glass-border);
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+            user-select: none;
+        }
+
+        .module-label:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(30, 41, 59, 0.5);
+        }
+
+        .module-checkbox:checked + .module-label {
+            background: rgba(20, 184, 166, 0.08);
+            border-color: var(--secondary);
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(20, 184, 166, 0.08);
+        }
+
+        .module-label::before {
+            content: '✓';
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 18px;
+            height: 18px;
+            border: 1.5px solid var(--glass-border);
+            border-radius: 4px;
+            margin-right: 12px;
+            font-size: 10px;
+            color: transparent;
+            transition: var(--transition);
+            background: rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+        }
+
+        .module-checkbox:checked + .module-label::before {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            color: #ffffff;
+        }
+
+        .quick-select-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .btn-text {
+            background: none;
+            border: none;
+            color: var(--secondary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-text:hover {
+            color: #2dd4bf;
+            text-decoration: underline;
+        }
+
+        /* Slider Styles */
+        .question-count-selector {
+            background: rgba(30, 41, 59, 0.25);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .slider-container input[type="range"] {
+            flex-grow: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--secondary);
+            box-shadow: 0 0 8px rgba(20, 184, 166, 0.5);
+            transition: var(--transition);
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .slider-container input[type="range"]:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .slider-value {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: var(--secondary);
+            min-width: 100px;
+            text-align: right;
+        }
+
+        /* Action Buttons */
+        .btn-primary {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, #4f46e5 100%);
+            border: none;
+            padding: 16px 30px;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 1.05rem;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+            text-align: center;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(99, 102, 241, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary:disabled {
+            background: #1e293b;
+            color: #64748b;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Quiz UI Elements */
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .module-badge {
+            background: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.25);
+            color: #a5b4fc;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .quiz-stats {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .timer-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(244, 63, 94, 0.1);
+            border: 1px solid rgba(244, 63, 94, 0.2);
+            color: #fca5a5;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .timer-badge.warning {
+            animation: flash 1s infinite alternate;
+        }
+
+        @keyframes flash {
+            0% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+            margin-bottom: 35px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+
+        .question-text {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 25px;
+            color: #ffffff;
+        }
+
+        /* Option Buttons / Cards */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .option-card {
+            background: rgba(30, 41, 59, 0.3);
+            border: 1.5px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 16px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+            color: #e2e8f0;
+            position: relative;
+        }
+
+        .option-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(30, 41, 59, 0.5);
+            transform: translateX(4px);
+        }
+
+        .option-card.selected {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.08);
+            color: #ffffff;
+        }
+
+        .option-text {
+            font-size: 0.95rem;
+            font-weight: 500;
+            line-height: 1.4;
+            padding-right: 15px;
+        }
+
+        .option-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid var(--glass-border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .option-card.selected .option-indicator {
+            border-color: var(--primary);
+            background: var(--primary);
+        }
+
+        .option-card.selected .option-indicator::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ffffff;
+        }
+
+        /* Correct / Incorrect states */
+        .option-card.correct {
+            border-color: var(--success) !important;
+            background: rgba(16, 185, 129, 0.12) !important;
+            color: #a7f3d0 !important;
+        }
+
+        .option-card.correct .option-indicator {
+            border-color: var(--success) !important;
+            background: var(--success) !important;
+        }
+
+        .option-card.correct .option-indicator::after {
+            content: '✓';
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 800;
+            background: none;
+            border-radius: 0;
+            width: auto;
+            height: auto;
+        }
+
+        .option-card.incorrect {
+            border-color: var(--accent) !important;
+            background: rgba(244, 63, 148, 0.12) !important;
+            color: #fecdd3 !important;
+        }
+
+        .option-card.incorrect .option-indicator {
+            border-color: var(--accent) !important;
+            background: var(--accent) !important;
+        }
+
+        .option-card.incorrect .option-indicator::after {
+            content: '✗';
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 800;
+            background: none;
+            border-radius: 0;
+            width: auto;
+            height: auto;
+        }
+
+        .option-card.disabled {
+            pointer-events: none;
+            opacity: 0.65;
+        }
+
+        .option-card.disabled.correct, .option-card.disabled.incorrect {
+            opacity: 1;
+        }
+
+        /* Explanation Box */
+        .explanation-box {
+            background: rgba(16, 185, 129, 0.05);
+            border-left: 4px solid var(--success);
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #d1fae5;
+            display: none;
+            animation: slideDown 0.3s ease-out forwards;
+        }
+
+        .explanation-title {
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #6ee7b7;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Result View Styles */
+        .results-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .score-circle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .score-ring {
+            width: 150px;
+            height: 150px;
+        }
+
+        .score-circle {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .score-circle-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.05);
+            stroke-width: 8;
+        }
+
+        .score-circle-progress {
+            fill: none;
+            stroke: url(#score-gradient);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 440;
+            stroke-dashoffset: 440;
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .score-text-overlay {
+            position: absolute;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .score-subtext {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .result-appreciation {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .result-stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+
+        .stat-badge {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Review Section */
+        .review-section {
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 30px;
+        }
+
+        .review-card {
+            background: rgba(15, 23, 42, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .review-question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .review-module {
+            font-size: 0.7rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: var(--text-muted);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .review-question-text {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .review-choices {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+        }
+
+        .review-choice {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px dashed rgba(255, 255, 255, 0.05);
+        }
+
+        .review-choice.user-wrong {
+            border-color: var(--accent);
+            background: rgba(244, 63, 94, 0.05);
+            color: #fca5a5;
+        }
+
+        .review-choice.correct-ans {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.05);
+            color: #6ee7b7;
+        }
+
+        .review-explanation {
+            font-size: 0.8rem;
+            color: #a7f3d0;
+            background: rgba(16, 185, 129, 0.04);
+            border-left: 2.5px solid var(--success);
+            padding: 10px 14px;
+            border-radius: 0 6px 6px 0;
+            line-height: 1.4;
+        }
+
+        /* Views management */
+        .view {
+            display: none;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        /* Audio controls floating */
+        .audio-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--glass-border);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .audio-toggle:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+
+    <div class="container">
+        <div class="glass-card">
+            
+            <!-- Audio toggle button -->
+            <button class="audio-toggle" id="audio-toggle" title="Activer/Désactiver le son">
+                <svg id="sound-on-icon" style="display: block;" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                <svg id="sound-off-icon" style="display: none;" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+            </button>
+
+            <!-- 1. WELCOME VIEW -->
+            <div id="welcome-view" class="view active">
+                <h1>Partiel QSE - Entraînement</h1>
+                <p class="subtitle">Préparez efficacement vos partiels de MPI grâce à un outil d'entraînement professionnel basé sur l'ensemble de vos livrets de cours.</p>
+                
+                <div class="settings-section">
+                    <div class="section-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                        Choisir le Mode d'Entraînement
+                    </div>
+                    <div class="mode-selector">
+                        <div class="mode-btn active" id="mode-study" onclick="setMode('study')">
+                            <h3>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                                Mode Entraînement
+                            </h3>
+                            <p>Idéal pour apprendre. Correction instantanée après chaque question et explications issues des livrets de cours.</p>
+                        </div>
+                        <div class="mode-btn" id="mode-exam" onclick="setMode('exam')">
+                            <h3>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                Mode Examen
+                            </h3>
+                            <p>Test chronométré. Score et bilan de correction uniquement à la fin du QCM pour tester ses connaissances réelles.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <div class="section-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+                        Sélectionner les Modules de Cours
+                    </div>
+                    <div class="quick-select-buttons">
+                        <button class="btn-text" onclick="toggleAllModules(true)">Tout Sélectionner</button>
+                        <span style="color: var(--text-muted); font-size: 0.8rem;">|</span>
+                        <button class="btn-text" onclick="toggleAllModules(false)">Tout Désélectionner</button>
+                    </div>
+                    
+                    <div class="modules-grid" id="modules-list">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <div class="section-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><circle cx="9" cy="9" r="2"></circle><circle cx="15" cy="15" r="2"></circle></svg>
+                        Nombre de Questions
+                    </div>
+                    <div class="question-count-selector">
+                        <div class="slider-container">
+                            <input type="range" id="question-count-slider" min="10" max="40" step="5" value="20" oninput="updateQuestionCountLabel()">
+                            <span class="slider-value" id="question-count-label">20 questions</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-primary" id="start-btn" onclick="startQuiz()">Lancer l'entraînement</button>
+            </div>
+
+            <!-- 2. QUIZ VIEW -->
+            <div id="quiz-view" class="view">
+                <div class="quiz-header">
+                    <span class="module-badge" id="current-module-badge">Module</span>
+                    <div class="quiz-stats">
+                        <span id="question-counter">Question 1/1</span>
+                        <div class="timer-badge" id="quiz-timer" style="display: none;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            <span id="timer-text">30s</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+
+                <div class="question-text" id="question-text">
+                    La question s'affiche ici.
+                </div>
+
+                <div class="options-list" id="options-list">
+                    <!-- Populated by JavaScript -->
+                </div>
+
+                <div class="explanation-box" id="explanation-box">
+                    <div class="explanation-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        Explication du cours
+                    </div>
+                    <div id="explanation-text">L'explication détaillée s'affiche ici.</div>
+                </div>
+
+                <button class="btn-primary" id="next-btn" onclick="submitOrNext()" disabled>Valider la réponse</button>
+            </div>
+
+            <!-- 3. RESULTS VIEW -->
+            <div id="results-view" class="view">
+                <div class="results-header">
+                    <h1>Bilan d'entraînement</h1>
+                    <p class="subtitle" id="results-subtitle">Félicitations, vous avez complété le questionnaire !</p>
+                </div>
+
+                <div class="score-circle-container">
+                    <div class="score-ring">
+                        <svg class="score-circle" viewBox="0 0 160 160">
+                            <defs>
+                                <linearGradient id="score-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="var(--primary)" />
+                                    <stop offset="100%" stop-color="var(--secondary)" />
+                                </linearGradient>
+                            </defs>
+                            <circle class="score-circle-bg" cx="80" cy="80" r="70" />
+                            <circle class="score-circle-progress" id="score-progress" cx="80" cy="80" r="70" />
+                        </svg>
+                    </div>
+                    <div class="score-text-overlay">
+                        <span id="score-display">0/0</span>
+                        <span class="score-subtext" id="score-percentage">0%</span>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <div class="result-appreciation" id="result-appreciation">Excellent !</div>
+                </div>
+
+                <div class="result-stats-row">
+                    <div class="stat-badge">
+                        <div class="stat-value" id="stat-time">0m 0s</div>
+                        <div class="stat-label">Temps</div>
+                    </div>
+                    <div class="stat-badge">
+                        <div class="stat-value" id="stat-correct">0</div>
+                        <div class="stat-label">Correctes</div>
+                    </div>
+                    <div class="stat-badge">
+                        <div class="stat-value" id="stat-incorrect">0</div>
+                        <div class="stat-label">Erreurs</div>
+                    </div>
+                </div>
+
+                <!-- Review Section -->
+                <div class="review-section" id="review-section" style="display: none;">
+                    <div class="section-title">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        Détails des questions manquées
+                    </div>
+                    <div id="review-list">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+
+                <button class="btn-primary" style="margin-top: 30px;" onclick="restartQuiz()">Recommencer une série</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Database of 110 QCM questions spanning the 11 course modules
+        const questionsDB = [
+    {
+        "module": "Qualité & ISO 9001 - Enjeux",
+        "question": "Quelle est la définition normative de la non-conformité selon l'AFNOR ?",
+        "options": [
+            "La fabrication d'un produit défectueux présentant un danger de sécurité.",
+            "La non-satisfaction d'une exigence (besoin ou attente formulé).",
+            "Un écart supérieur à 10% par rapport au budget de fonctionnement.",
+            "Un produit non inspecté en fin de chaîne de montage."
+        ],
+        "correct": 1,
+        "explanation": "Selon l'AFNOR, la non-conformité est définie comme la 'non-satisfaction d'une exigence', qui correspond à un besoin ou une attente formulée, implicite ou obligatoire."
+    },
+    {
+        "module": "Qualité & ISO 9001 - Enjeux",
+        "question": "Quels sont les 7 principes de management de la qualité sur lesquels s'appuie l'ISO 9001 ?",
+        "options": [
+            "Tri, Rangement, Nettoyage, Standardisation, Rigueur, Standard et Pérennisation.",
+            "Orientation client, Leadership, Implication du personnel, Approche processus, Amélioration, Prise de décision fondée sur des preuves, Management des relations avec les PI.",
+            "Zéro défaut, Zéro délai, Zéro panne, Zéro stock, Zéro papier, Zéro accident.",
+            "Planification, Production, Contrôle, Traçabilité, Audit, Action corrective, Excellence."
+        ],
+        "correct": 1,
+        "explanation": "La norme ISO 9001 repose sur 7 principes fondamentaux de management : orientation client, leadership, implication du personnel, approche processus, amélioration, prise de décision sur preuves et gestion des relations avec les parties intéressées (PI)."
+    },
+    {
+        "module": "Qualité & ISO 9001 - Enjeux",
+        "question": "À quoi fait référence la règle des « 5 zéros » en Qualité Totale ?",
+        "options": [
+            "0 retard, 0 rebut, 0 réclamation, 0 accident, 0 pollution.",
+            "0 défaut, 0 délai, 0 panne, 0 stock, 0 papier/accident.",
+            "0 investissement, 0 maintenance curative, 0 risque externe, 0 écart, 0 inspecteur.",
+            "0 contrôle qualité, 0 sous-traitance, 0 procédure écrite, 0 stock tampon, 0 rebut."
+        ],
+        "correct": 1,
+        "explanation": "La Qualité Totale vise à éradiquer les gaspillages à travers la règle des '5 zéros' : zéro défaut (qualité), zéro délai (logistique), zéro panne (production), zéro stock (flexibilité et coûts) et zéro papier (administration) ou zéro accident."
+    },
+    {
+        "module": "Qualité & ISO 9001 - Enjeux",
+        "question": "Qu'est-ce que la « Qualité externe » ?",
+        "options": [
+            "La propreté extérieure des locaux de l'entreprise.",
+            "Le respect des exigences de conformité internes à l'atelier.",
+            "La réponse directe aux exigences et à la satisfaction du CLIENT.",
+            "Le niveau de performance des prestataires de transport uniquement."
+        ],
+        "correct": 2,
+        "explanation": "La qualité externe correspond à la satisfaction des besoins des clients. C'est le produit ou service fourni par l'entreprise qui doit correspondre aux attentes exprimées ou implicites du client."
+    },
+    {
+        "module": "Qualité & ISO 9001 - Enjeux",
+        "question": "Qu'englobe la « Qualité interne » au sein d'une organisation ?",
+        "options": [
+            "La satisfaction des clients extérieurs de l'entreprise.",
+            "L'amélioration du fonctionnement interne (coûts, efficacité, VA, conditions de travail) pour satisfaire l'organisme.",
+            "La conformité des produits achetés auprès des fournisseurs uniquement.",
+            "Le contrôle des entrées et sorties physiques du personnel."
+        ],
+        "correct": 1,
+        "explanation": "La qualité interne concerne l'amélioration du fonctionnement de l'organisme (efficacité des processus, réduction des coûts de non-qualité, climat social, ergonomie) afin de mieux satisfaire l'organisation en interne."
+    },
+    {
+        "module": "Qualité & ISO 9001 - Enjeux",
+        "question": "Selon la norme ISO 9001, comment définit-on un « Risque » ?",
+        "options": [
+            "Un événement indésirable causant obligatoirement des dommages corporels.",
+            "L'effet de l'incertitude (qui peut être un écart positif ou négatif par rapport à une attente).",
+            "La probabilité de non-détection d'une défaillance par l'opérateur.",
+            "Une non-conformité majeure entraînant l'arrêt de la production."
+        ],
+        "correct": 1,
+        "explanation": "Dans la version récente de l'ISO 9001 (approche par les risques), le risque est défini comme 'l'effet de l'incertitude'. Cet effet peut donner lieu à un écart positif (opportunité) ou négatif par rapport aux résultats attendus."
+    },
+    {
+        "module": "Qualité & ISO 9001 - Enjeux",
+        "question": "Quelles sont les 5 étapes classiques de la gestion du risque dans un SMQ ?",
+        "options": [
+            "Planifier, Faire, Vérifier, Agir, Auditer.",
+            "Identifier, Évaluer, Traiter, Suivre, Communiquer.",
+            "Détecter, Isoler, Réparer, Facturer, Clôturer.",
+            "Préparer, Mesurer, Cotiser, Sanctionner, Standardiser."
+        ],
+        "correct": 1,
+        "explanation": "La gestion des risques passe par 5 étapes structurées : 1. Identification du risque, 2. Évaluation (probabilité/gravité), 3. Traitement (actions préventives/d'atténuation), 4. Suivi et revue, 5. Communication."
+    },
+    {
+        "module": "Qualité & ISO 9001 - Enjeux",
+        "question": "Qu'est-ce que la « Qualité Totale » (TQM) ?",
+        "options": [
+            "Un contrôle à 100% de toutes les pièces en fin de ligne.",
+            "Une démarche managériale associant tout le personnel pour satisfaire les clients tout en intégrant compétitivité et rentabilité.",
+            "L'obligation de n'avoir aucun fournisseur externe à l'entreprise.",
+            "Le fait d'avoir rédigé des procédures pour 100% des tâches de l'entreprise."
+        ],
+        "correct": 1,
+        "explanation": "La Qualité Totale est une philosophie de management qui implique l'ensemble des salariés pour satisfaire durablement les clients, en optimisant la qualité globale tout en assurant la compétitivité et la rentabilité de l'entreprise."
+    },
+    {
+        "module": "Qualité & ISO 9001 - Enjeux",
+        "question": "Comment se décomposent les coûts liés à la qualité ?",
+        "options": [
+            "Coûts d'achat et coûts de revente.",
+            "Coûts d'obtention de la qualité (prévention, contrôle) et coûts des non-qualités (internes, externes).",
+            "Coûts fixes de production et coûts variables logistiques.",
+            "Coûts d'audit externe et coûts des assurances AT/MP."
+        ],
+        "correct": 1,
+        "explanation": "On distingue les coûts d'obtention de la qualité (dépensés pour bien faire : prévention, formation, inspections) et les coûts subis de non-qualité (rebuts, retouches en interne, réclamations, pénalités en externe)."
+    },
+    {
+        "module": "Qualité & ISO 9001 - Enjeux",
+        "question": "Quel est l'un des défis majeurs dans l'évolution récente du management de la qualité ?",
+        "options": [
+            "Rendre le système documentaire encore plus lourd et complexe.",
+            "Parler de Performance et d'Excellence globale au lieu de simple conformité, et simplifier le SMQ.",
+            "Remplacer les opérateurs humains par des caméras d'inspection automatisées.",
+            "Externaliser l'ensemble des contrôles qualité auprès de prestataires étrangers."
+        ],
+        "correct": 1,
+        "explanation": "La qualité moderne évolue vers des concepts de 'Performance' et d''Excellence opérationnelle' (comme le Lean) en simplifiant le SMQ pour le rendre plus opérationnel, agile et accessible à tous au quotidien."
+    },
+    {
+        "module": "Approche processus",
+        "question": "Quels sont les trois types de processus clés d'un organisme ?",
+        "options": [
+            "Processus d'approvisionnement, de fabrication et de livraison.",
+            "Processus de pilotage, de réalisation (métier) et de support.",
+            "Processus financiers, techniques et administratifs.",
+            "Processus de contrôle, d'audit et de certification."
+        ],
+        "correct": 1,
+        "explanation": "Les processus sont classés en : pilotage (stratégie, pilotage de l'organisme), réalisation (activités opérationnelles créatrices de valeur ajoutée directe pour le client) et support (fourniture des ressources nécessaires comme l'informatique, les RH, la maintenance)."
+    },
+    {
+        "module": "Approche processus",
+        "question": "Que signifie le sigle SIPOC utilisé en modélisation de processus ?",
+        "options": [
+            "Strategy, Input, Process, Output, Control.",
+            "Supplier, Input, Process, Output, Customer.",
+            "System, Interaction, Performance, Organisation, Cooperation.",
+            "Safety, Improvement, Plan, Operation, Compliance."
+        ],
+        "correct": 1,
+        "explanation": "Le SIPOC (Supplier, Input, Process, Output, Customer) permet de cartographier de manière macroscopique les flux entrants et sortants d'un processus en identifiant les fournisseurs, les intrants, les étapes du processus, les livrables et les clients."
+    },
+    {
+        "module": "Approche processus",
+        "question": "Quelle est la différence fondamentale entre une cartographie des processus et un organigramme ?",
+        "options": [
+            "L'organigramme décrit les flux de production physique, la cartographie décrit les flux financiers.",
+            "L'organigramme décrit la structure hiérarchique, la cartographie décrit la suite d'activités créatrices de valeur et leurs interactions.",
+            "L'organigramme est obligatoire, la cartographie est facultative pour la certification.",
+            "Il n'y a aucune différence, ce sont deux termes synonymes."
+        ],
+        "correct": 1,
+        "explanation": "L'organigramme montre les rapports hiérarchiques et les départements d'une entreprise (vue verticale et cloisonnée), alors que la cartographie des processus montre comment les activités s'enchaînent de manière transversale pour satisfaire le client (vue horizontale et systémique)."
+    },
+    {
+        "module": "Approche processus",
+        "question": "Comment définit-on un « processus » dans un système de management ?",
+        "options": [
+            "Un ensemble d'instructions écrites détaillant comment utiliser une machine spécifique.",
+            "Un ensemble d'activités corrélées ou en interaction qui utilise des éléments d'entrée pour produire un résultat escompté.",
+            "Un flux financier décrivant les coûts directs d'une ligne de fabrication.",
+            "Le parcours professionnel d'un salarié au sein d'une entreprise."
+        ],
+        "correct": 1,
+        "explanation": "Selon les normes ISO, un processus est un ensemble d'activités liées qui transforment des éléments d'entrée (intrants) en éléments de sortie (extrants) en créant de la valeur ajoutée."
+    },
+    {
+        "module": "Approche processus",
+        "question": "À quoi sert principalement une « fiche processus » ?",
+        "options": [
+            "À lister les salaires de tous les collaborateurs travaillant dans ce service.",
+            "À décrire l'identité du processus (pilote, objectifs, indicateurs, intrants/extrants, risques associés).",
+            "À remplacer le contrat de travail des opérateurs.",
+            "À noter les pannes quotidiennes d'une machine de production."
+        ],
+        "correct": 1,
+        "explanation": "La fiche processus est la carte d'identité d'un processus. Elle définit son pilote (responsable), son périmètre (début/fin), ses objectifs, ses indicateurs de performance (KPI), ses risques et ses interactions avec les autres processus."
+    },
+    {
+        "module": "Approche processus",
+        "question": "Quels processus doit-on analyser et améliorer en priorité dans une démarche QSE ?",
+        "options": [
+            "Les processus les plus faciles et les moins chers à modifier.",
+            "Les processus à forte valeur ajoutée (VA), ceux présentant de forts dysfonctionnements ou générant de l'insatisfaction client.",
+            "Les processus administratifs uniquement.",
+            "Les processus de sous-traitance à l'étranger."
+        ],
+        "correct": 1,
+        "explanation": "L'amélioration doit se concentrer sur les priorités stratégiques : les processus clés créateurs de VA, ceux dont les indicateurs montrent des dysfonctionnements répétés, ou ceux impactant directement la satisfaction du client."
+    },
+    {
+        "module": "Approche processus",
+        "question": "Comment évalue-t-on la criticité d'un processus lors de son analyse ?",
+        "options": [
+            "En mesurant uniquement sa durée en heures de travail.",
+            "Criticité = Fréquence x Importance x Maîtrise.",
+            "Criticité = Gravité + Occurrence + Détection.",
+            "En calculant le nombre d'employés affectés à ce processus."
+        ],
+        "correct": 1,
+        "explanation": "Pour classer les processus à améliorer, on peut évaluer leur criticité avec la formule : Fréquence d'occurrence du problème x Importance stratégique du processus x Niveau de Maîtrise actuel."
+    },
+    {
+        "module": "Approche processus",
+        "question": "Que signifie la notion de « valeur ajoutée » (VA) d'un processus ?",
+        "options": [
+            "L'augmentation du prix de vente décidée par le service marketing.",
+            "La transformation positive de l'intrant en extrant apportant un bénéfice perçu par le client final.",
+            "La somme de toutes les heures de travail nécessaires à la fabrication.",
+            "La taxe sur la valeur ajoutée (TVA) payée à l'État."
+        ],
+        "correct": 1,
+        "explanation": "La valeur ajoutée d'un processus est sa capacité à transformer les éléments d'entrée d'une manière qui apporte une utilité ou une satisfaction supplémentaire au client final, justifiant ainsi le coût des opérations."
+    },
+    {
+        "module": "Approche processus",
+        "question": "Quels sont les éléments clés à maîtriser pour chaque processus ?",
+        "options": [
+            "L'identité du pilote du processus, les objectifs associés, les ressources et la mesure de l'efficacité.",
+            "Uniquement le respect du budget de fonctionnement annuel.",
+            "L'obligation d'avoir une certification ISO 9001 individuelle pour chaque processus.",
+            "Le fait de n'utiliser aucun papier dans le flux d'informations."
+        ],
+        "correct": 0,
+        "explanation": "La maîtrise d'un processus implique de définir un pilote (responsable), des objectifs clairs et mesurables, des ressources adéquates (humaines et matérielles), et de suivre son efficacité via des indicateurs."
+    },
+    {
+        "module": "Approche processus",
+        "question": "Quel est l'intérêt de combiner l'approche processus avec l'approche risque ?",
+        "options": [
+            "Augmenter le nombre d'audits internes de l'entreprise.",
+            "Identifier et analyser les risques au niveau de chaque processus pour sécuriser l'atteinte des objectifs opérationnels.",
+            "Remplacer les indicateurs de performance par des indicateurs de risques.",
+            "Réduire le nombre de réunions de direction générale."
+        ],
+        "correct": 1,
+        "explanation": "Associer processus et risques permet une approche proactive : on identifie ce qui pourrait empêcher chaque processus d'atteindre ses objectifs, permettant ainsi de mettre en place des actions préventives ciblées."
+    },
+    {
+        "module": "Système documentaire",
+        "question": "Selon l'ISO 9001 actuelle, quelles sont les exigences relatives au Manuel Qualité et aux procédures rédigées ?",
+        "options": [
+            "Ils restent strictement obligatoires sous format papier dument signé.",
+            "Aucune procédure spécifique ni manuel n'est obligatoire ; seule la notion d'informations documentées nécessaires subsiste.",
+            "Le Manuel Qualité est facultatif mais les procédures écrites restent obligatoires pour la certification.",
+            "Seuls les enregistrements de contrôle sont requis, les procédures de travail sont interdites pour éviter la rigidité."
+        ],
+        "correct": 1,
+        "explanation": "Les révisions récentes de la norme ISO 9001 ont supprimé l'obligation formelle de rédiger un 'Manuel Qualité' ou des procédures écrites spécifiques. La norme introduit la notion d'« informations documentées », dont la quantité et le format dépendent des besoins réels de l'entreprise."
+    },
+    {
+        "module": "Système documentaire",
+        "question": "Comment différencie-t-on une « information documentée de support » d'un « enregistrement » ?",
+        "options": [
+            "Le document de support est rédigé par un ingénieur, l'enregistrement par un opérateur.",
+            "Le document de support décrit une procédure et peut être révisé (ex: mode opératoire), alors que l'enregistrement apporte la preuve d'un résultat et est figé (ex: rapport d'audit).",
+            "Le document de support doit être papier, l'enregistrement doit être informatique.",
+            "Il n'y a pas de distinction, ce sont deux termes équivalents."
+        ],
+        "correct": 1,
+        "explanation": "Les informations de support (instructions, modes opératoires) servent de guides modifiables et révisés pour le travail. Les enregistrements (comptes rendus, résultats de tests) prouvent que les tâches ont été réalisées et ne peuvent plus être modifiés."
+    },
+    {
+        "module": "Système documentaire",
+        "question": "Quelle est la durée réglementaire de conservation des pièces comptables et justificatives en France ?",
+        "options": [
+            "3 ans.",
+            "5 ans.",
+            "10 ans.",
+            "40 ans."
+        ],
+        "correct": 2,
+        "explanation": "En France, les pièces comptables et justificatives (factures d'achats/ventes, livres comptables, bons de commande) doivent légalement être conservées pendant 10 ans."
+    },
+    {
+        "module": "Système documentaire",
+        "question": "Qu'est-ce qu'une « information documentée » selon la norme ISO 9001 ?",
+        "options": [
+            "Un document officiel certifié par un huissier de justice.",
+            "Une information devant être maîtrisée et tenue à jour par un organisme ainsi que le support sur lequel elle figure.",
+            "N'importe quel e-mail échangé au sein de l'entreprise.",
+            "Une fiche de salaire archivée au service RH."
+        ],
+        "correct": 1,
+        "explanation": "L'information documentée désigne tout type d'information (procédure, spécification, plan, preuve) que l'organisme juge nécessaire de formaliser, de contrôler, de diffuser et de conserver sur un support adapté (numérique ou physique)."
+    },
+    {
+        "module": "Système documentaire",
+        "question": "Quelle est la durée d'archivage conseillée pour les documents du SMI (hors réglementaire) ?",
+        "options": [
+            "1 an.",
+            "3 ans.",
+            "10 ans.",
+            "Indéfiniment."
+        ],
+        "correct": 1,
+        "explanation": "Pour les documents internes liés au SMI (audits internes, revues de direction, fiches de non-conformité), une durée de conservation conseillée de 3 ans est généralement appliquée pour assurer un historique suffisant lors des audits de certification."
+    },
+    {
+        "module": "Système documentaire",
+        "question": "Quelle règle est cruciale lors de la modification d'un document dans un SMI ?",
+        "options": [
+            "Ne jamais modifier le document original, toujours en créer un nouveau avec un nom différent.",
+            "Ne jamais modifier un document sans mettre à jour son numéro de version et l'expliquer aux acteurs concernés.",
+            "Modifier les documents directement sur les postes sans prévenir la direction.",
+            "Obtenir l'accord écrit de l'inspecteur du travail avant chaque modification."
+        ],
+        "correct": 1,
+        "explanation": "La maîtrise des modifications exige de mettre à jour le numéro de version (ou d'indice) du document, de tracer la modification et de s'assurer que les utilisateurs concernés sont informés et utilisent la dernière version à jour."
+    },
+    {
+        "module": "Système documentaire",
+        "question": "Quelles informations clés doit contenir un « document opérationnel » de poste ?",
+        "options": [
+            "Uniquement le nom de l'opérateur qualifié.",
+            "Le Quoi (actions), le Qui (acteurs), le Quand (timing), le Comment (méthode) et le Pourquoi (résultats).",
+            "Les coordonnées des fournisseurs de la machine.",
+            "Le tarif de vente des pièces produites."
+        ],
+        "correct": 1,
+        "explanation": "Un document opérationnel (fiche d'instruction, mode opératoire) doit être clair et complet en répondant au QQOQCP pour guider efficacement l'opérateur sur les actions, responsabilités, délais et critères de réussite."
+    },
+    {
+        "module": "Système documentaire",
+        "question": "Qu'appelle-t-on les « documents externes » dans un SMI ?",
+        "options": [
+            "Les documents rédigés par les filiales étrangères de l'entreprise.",
+            "Les documents d'origine externe nécessaires au fonctionnement du SMI (normes, règlements, notices fournisseurs, commandes clients).",
+            "Les brochures publicitaires destinées au grand public.",
+            "Les articles de presse concernant l'entreprise."
+        ],
+        "correct": 1,
+        "explanation": "Les documents externes sont des documents indispensables au fonctionnement de l'entreprise mais non créés par elle (ex: normes NF/ISO, réglementations environnementales, plans ou commandes clients, notices techniques des machines)."
+    },
+    {
+        "module": "Système documentaire",
+        "question": "Quels sont les critères pour qu'une information documentée soit jugée « appropriée » ?",
+        "options": [
+            "Elle doit obligatoirement faire plus de 5 pages pour être jugée sérieuse.",
+            "Elle doit avoir une identification claire (titre, date, auteur, réf), un format adapté, et faire l'objet d'une revue périodique.",
+            "Elle doit être traduite dans toutes les langues de l'Union Européenne.",
+            "Elle doit être validée par signature manuscrite de tous les employés."
+        ],
+        "correct": 1,
+        "explanation": "Une documentation appropriée nécessite une identification unique (référence, version, auteur), un format compréhensible par ses utilisateurs (langue, support papier ou informatique) et une réévaluation périodique de sa pertinence."
+    },
+    {
+        "module": "Système documentaire",
+        "question": "Quel est le but ultime de la gestion et de la maîtrise documentaire dans une entreprise ?",
+        "options": [
+            "Générer le plus de documents possible pour prouver le travail de l'équipe qualité.",
+            "Assurer que les bons documents sont disponibles et protégés au bon endroit et au bon moment.",
+            "Remplacer le dialogue direct entre les responsables et les salariés.",
+            "Éviter d'avoir à former les nouveaux salariés."
+        ],
+        "correct": 1,
+        "explanation": "La maîtrise documentaire vise à garantir que l'information nécessaire est disponible, compréhensible, à jour, protégée contre l'altération ou la perte, et accessible uniquement aux personnes autorisées."
+    },
+    {
+        "module": "Traitement des NC",
+        "question": "Quelles sont les 5 étapes méthodologiques du traitement d'une non-conformité ?",
+        "options": [
+            "Détection, Isolement, Réparation, Facturation, Clôture.",
+            "Détection, Actions curatives, Analyse des causes, Actions correctives, Revue des NC et actions préventives.",
+            "Audit interne, Constat, Rappel à l'ordre, Plan d'action, Certification.",
+            "Plainte, Remboursement, Modification de contrat, Excuses, Archivage."
+        ],
+        "correct": 1,
+        "explanation": "Le traitement d'une non-conformité suit un cycle logique : 1. Détection (fiche de NC), 2. Action curative (corriger immédiatement l'effet), 3. Analyse des causes (trouver la racine du problème), 4. Action corrective (éliminer la cause) et 5. Revue/Actions préventives (éviter l'apparition ailleurs)."
+    },
+    {
+        "module": "Traitement des NC",
+        "question": "Quelle est la différence fondamentale entre une action curative et une action corrective ?",
+        "options": [
+            "L'action curative élimine la cause profonde du problème, l'action corrective résout le symptôme immédiatement.",
+            "L'action curative résout le problème immédiatement et limite ses effets (symptôme), alors que l'action corrective élimine la cause racine pour éviter sa réapparition.",
+            "L'action curative est réalisée par un prestataire externe, l'action corrective par le personnel interne.",
+            "Il n'y a pas de différence, les deux termes sont synonymes dans la norme."
+        ],
+        "correct": 1,
+        "explanation": "L'action curative (correction) vise à éteindre l'incendie immédiatement (ex. isoler un produit non conforme). L'action corrective s'attaque à la cause racine pour éviter que l'incendie ne se déclare à nouveau (ex. changer un composant défectueux à l'origine de la panne)."
+    },
+    {
+        "module": "Traitement des NC",
+        "question": "Quels outils d'analyse sont couramment utilisés pour trouver la cause d'une non-conformité ?",
+        "options": [
+            "La grille AMDEC, la matrice Farmer et le DUER.",
+            "Le diagramme d'Ishikawa (5M), les 5 Pourquoi et le QQOQCCP.",
+            "Les 5S, la cartographie des processus et le SIPOC.",
+            "Le tableau de bord, les KPI et la pyramide de Bird."
+        ],
+        "correct": 1,
+        "explanation": "L'analyse des causes s'appuie sur le QQOQCCP (décrire les faits), le diagramme d'Ishikawa (trier les causes par catégories : Milieu, Méthode, Matière, Matériel, Main d'œuvre) et les 5 Pourquoi (remonter pas à pas jusqu'à la cause racine)."
+    },
+    {
+        "module": "Traitement des NC",
+        "question": "Quelle est la définition d'une non-conformité selon l'ISO 9001 (AFNOR) ?",
+        "options": [
+            "Un dysfonctionnement matériel entraînant l'arrêt de la production.",
+            "La non-satisfaction d'une exigence (besoin ou attente formulé).",
+            "Un écart financier négatif constaté lors de la clôture des comptes.",
+            "Un produit rejeté par le client final uniquement."
+        ],
+        "correct": 1,
+        "explanation": "La non-conformité est définie par l'AFNOR comme la 'non-satisfaction d'une exigence', qu'il s'agisse d'une exigence client, d'une exigence interne de l'entreprise ou d'une exigence réglementaire."
+    },
+    {
+        "module": "Traitement des NC",
+        "question": "Qu'est-ce qu'une « action corrective » ?",
+        "options": [
+            "Une sanction disciplinaire appliquée à l'opérateur responsable de l'erreur.",
+            "Une action visant à éliminer la cause d'une non-conformité ou d'une autre situation indésirable détectée.",
+            "Une action de réparation immédiate d'une pièce cassée.",
+            "Un ajustement des prix de vente pour compenser le coût des rebuts."
+        ],
+        "correct": 1,
+        "explanation": "Une action corrective vise à traiter la cause d'une non-conformité existante afin d'éviter sa récurrence. Elle intervient après l'analyse des causes."
+    },
+    {
+        "module": "Traitement des NC",
+        "question": "Quelle est la première action physique à mener dès la détection d'un produit non-conforme dans un atelier ?",
+        "options": [
+            "Le jeter immédiatement à la poubelle pour ne pas encombrer l'atelier.",
+            "L'identifier clairement (étiquetage) et le mettre en quarantaine pour éviter son utilisation involontaire.",
+            "Continuer la production et attendre l'audit de fin de semaine.",
+            "Appeler immédiatement le client pour s'excuser."
+        ],
+        "correct": 1,
+        "explanation": "La maîtrise des non-conformités exige d'identifier l'élément non conforme et de l'isoler (mise en quarantaine) afin d'éviter sa livraison ou son utilisation involontaire dans le flux de production."
+    },
+    {
+        "module": "Traitement des NC",
+        "question": "Qu'est-ce qu'une « action préventive » dans un système de management ?",
+        "options": [
+            "Une action corrective menée avant la certification officielle.",
+            "Une action visant à éliminer la cause d'une non-conformité potentielle avant qu'elle ne survienne.",
+            "Une inspection de contrôle qualité en fin de ligne de fabrication.",
+            "Une consigne de sécurité affichée à l'entrée de l'usine."
+        ],
+        "correct": 1,
+        "explanation": "L'action préventive intervient avant que le problème ne se produise. Elle est basée sur l'analyse des risques (ex: AMDEC, DUER) et vise à empêcher l'apparition d'une non-conformité potentielle."
+    },
+    {
+        "module": "Traitement des NC",
+        "question": "À quel moment doit-on évaluer l'efficacité d'un plan d'action corrective ?",
+        "options": [
+            "Immédiatement après avoir défini les actions, avant leur mise en œuvre.",
+            "Après un délai d'application suffisant pour vérifier que la non-conformité ne s'est pas reproduite, avant la clôture de la fiche.",
+            "Uniquement lors de la visite annuelle de l'auditeur externe.",
+            "Jamais, cette étape n'est pas nécessaire si l'action a été réalisée."
+        ],
+        "correct": 1,
+        "explanation": "Une fiche de non-conformité ne peut être clôturée qu'après avoir mesuré et validé l'efficacité des actions correctives. On s'assure ainsi sur le terrain que la cause racine a bien été éliminée."
+    },
+    {
+        "module": "Traitement des NC",
+        "question": "À qui incombe la responsabilité de piloter le traitement des fiches de non-conformité ?",
+        "options": [
+            "À l'inspecteur du travail lors de ses visites.",
+            "Au responsable ou animateur QSE, en collaboration avec les pilotes des processus concernés.",
+            "À l'opérateur qui a commis l'erreur.",
+            "Au service comptable de l'entreprise."
+        ],
+        "correct": 1,
+        "explanation": "Le responsable ou animateur QSE coordonne et enregistre les fiches de NC, mais les actions correctives et l'analyse des causes sont menées en collaboration directe avec les pilotes des processus et équipes concernés."
+    },
+    {
+        "module": "Traitement des NC",
+        "question": "À quelle occasion procède-t-on à la revue générale des non-conformités et de l'efficacité des actions au niveau de la direction ?",
+        "options": [
+            "Lors de l'embauche d'un nouveau collaborateur.",
+            "Lors de la revue de direction annuelle.",
+            "Lors de chaque réunion de négociation salariale.",
+            "Chaque matin lors du point de démarrage de l'atelier."
+        ],
+        "correct": 1,
+        "explanation": "La revue de direction (annuelle ou semestrielle) est l'instance où la direction générale analyse la synthèse des non-conformités, évalue l'efficacité du SMQ et valide les plans d'actions préventives et correctives stratégiques."
+    },
+    {
+        "module": "Indicateurs & Tableaux de bord",
+        "question": "Qu'est-ce qu'un indicateur clé de performance (KPI) ?",
+        "options": [
+            "Un objectif financier fixé uniquement pour les actionnaires de l'entreprise.",
+            "Une donnée objective qui décrit une situation d'un point de vue quantitatif ou qualitatif pour aider à la prise de décision.",
+            "Une procédure décrivant comment régler une machine de production.",
+            "Un document obligatoire remis chaque année à la DREAL."
+        ],
+        "correct": 1,
+        "explanation": "Un indicateur (ou KPI) est une mesure chiffrée ou qualitative représentative de l'efficacité d'un système. Il permet de suivre l'écart par rapport à un objectif et d'orienter les décisions."
+    },
+    {
+        "module": "Indicateurs & Tableaux de bord",
+        "question": "Quelle est la définition et la finalité d'un Tableau de Bord ?",
+        "options": [
+            "Une liste des tâches quotidiennes de chaque collaborateur.",
+            "Un outil de synthèse et de visualisation des situations décrites et des constats effectués par les indicateurs.",
+            "Un panneau d'affichage à l'entrée de l'entreprise présentant le règlement intérieur.",
+            "Un rapport annuel confidentiel rédigé par le responsable des achats."
+        ],
+        "correct": 1,
+        "explanation": "Le tableau de bord regroupe et met en forme visuellement les indicateurs clés. Il permet une lecture rapide et synthétique des performances afin de faciliter le pilotage et de déclencher des actions."
+    },
+    {
+        "module": "Indicateurs & Tableaux de bord",
+        "question": "Quel piège majeur faut-il éviter lors de la mise en place d'indicateurs ?",
+        "options": [
+            "Avoir des indicateurs mis à jour de manière informatique.",
+            "L'absence de lien clair entre les indicateurs stratégiques de la direction et les indicateurs opérationnels du terrain.",
+            "Partager les résultats des indicateurs avec l'ensemble du personnel de l'entreprise.",
+            "Limiter le nombre d'indicateurs à 5 par processus."
+        ],
+        "correct": 1,
+        "explanation": "Un piège classique est de déconnecter les indicateurs opérationnels de la stratégie globale. Les indicateurs opérationnels doivent être alignés avec la stratégie pour que chacun contribue aux objectifs de l'entreprise."
+    },
+    {
+        "module": "Indicateurs & Tableaux de bord",
+        "question": "Quels sont les deux grands types d'indicateurs couramment distingués ?",
+        "options": [
+            "Les indicateurs d'entrée et les indicateurs de sortie.",
+            "Les indicateurs de résultat (mesurent l'atteinte de l'objectif) et les indicateurs d'activité ou de processus (mesurent le fonctionnement).",
+            "Les indicateurs d'heures de travail et les indicateurs de coût matière.",
+            "Les indicateurs internes et les indicateurs de sous-traitance."
+        ],
+        "correct": 1,
+        "explanation": "On distingue les indicateurs de résultat (ex: taux de satisfaction client, chiffre d'affaires) qui constatent la performance a posteriori, et les indicateurs d'activité/processus (ex: taux de pannes, nombre de pièces produites) qui mesurent le fonctionnement en continu."
+    },
+    {
+        "module": "Indicateurs & Tableaux de bord",
+        "question": "Quels critères doit respecter un indicateur de performance pertinent ?",
+        "options": [
+            "Il doit être difficile à mesurer pour prouver sa complexité scientifique.",
+            "Il doit être cohérent avec la stratégie, mesurable, mis à jour régulièrement, compris et communiqué.",
+            "Il doit être validé par un organisme externe chaque trimestre.",
+            "Il doit obligatoirement concerner un aspect financier."
+        ],
+        "correct": 1,
+        "explanation": "Un indicateur doit être SMART et opérationnel : connecté à la stratégie, facilement mesurable, mis à jour à intervalles définis, et partagé avec les équipes concernées pour avoir un impact réel."
+    },
+    {
+        "module": "Indicateurs & Tableaux de bord",
+        "question": "Quel est le lien entre la Performance et la Productivité au sein d'une organisation ?",
+        "options": [
+            "La performance est purement financière, la productivité est purement humaine.",
+            "La productivité est un des composants de la performance globale, qui intègre aussi des critères de qualité, de sécurité et d'environnement.",
+            "Ce sont deux termes strictement identiques mesurant le nombre de pièces par heure.",
+            "La performance exclut toute notion de productivité ou de rapidité de travail."
+        ],
+        "correct": 1,
+        "explanation": "La productivité mesure le ratio entre la production et les ressources utilisées. La performance est un concept plus large qui englobe la productivité mais y ajoute la conformité qualité, le respect des délais, la sécurité et les impacts environnementaux."
+    },
+    {
+        "module": "Indicateurs & Tableaux de bord",
+        "question": "Quelles informations doit comporter la fiche de définition d'un indicateur ?",
+        "options": [
+            "Uniquement la valeur de l'indicateur du mois dernier.",
+            "L'objectif à atteindre, la formule de calcul, la source des données, la fréquence de mise à jour, le responsable et le mode de diffusion.",
+            "Les coordonnées des fournisseurs de logiciels d'indicateurs.",
+            "La signature manuscrite du directeur général uniquement."
+        ],
+        "correct": 1,
+        "explanation": "Pour qu'un indicateur soit pérenne et fiable, sa fiche de définition doit clarifier sa formule, sa source, sa périodicité, ses cibles, et qui est responsable de sa collecte et de son analyse."
+    },
+    {
+        "module": "Indicateurs & Tableaux de bord",
+        "question": "Quelle est la fréquence recommandée de suivi d'un Tableau de Bord opérationnel ?",
+        "options": [
+            "Une fois par an, juste avant l'audit de certification.",
+            "À des échéances régulières adaptées au processus (quotidienne, hebdomadaire ou mensuelle) pour réagir rapidement.",
+            "Uniquement lorsque le directeur général en fait la demande écrite.",
+            "Toutes les heures de manière automatisée pour tous les services."
+        ],
+        "correct": 1,
+        "explanation": "La fréquence de suivi dépend de la réactivité nécessaire : les tableaux de bord opérationnels de production sont suivis quotidiennement ou hebdomadairement, tandis que les indicateurs stratégiques peuvent être mensuels ou trimestriels."
+    },
+    {
+        "module": "Indicateurs & Tableaux de bord",
+        "question": "Que permettent d'évaluer les résultats des indicateurs QSE ?",
+        "options": [
+            "Uniquement la conformité financière des investissements.",
+            "La conformité des produits/services, la satisfaction client, l'efficacité des processus et les besoins en amélioration.",
+            "La pertinence des contrats de travail des collaborateurs.",
+            "Le respect du code de déontologie par les fournisseurs étrangers."
+        ],
+        "correct": 1,
+        "explanation": "Les indicateurs QSE fournissent des données objectives pour mesurer la qualité des produits/services, l'atteinte des objectifs environnementaux (déchets, énergie), la sécurité (accidents, TMS) et piloter l'amélioration continue."
+    },
+    {
+        "module": "Indicateurs & Tableaux de bord",
+        "question": "Quel est le principal point d'attention concernant l'exploitation des données du Tableau de Bord ?",
+        "options": [
+            "Collecter les données sans jamais les analyser pour gagner du temps.",
+            "S'assurer que l'analyse des données débouche sur des actions correctives ou d'amélioration concrètes et suivies.",
+            "Rendre le tableau de bord confidentiel et réservé à la direction.",
+            "Utiliser uniquement des tableaux de bord au format papier."
+        ],
+        "correct": 1,
+        "explanation": "Un tableau de bord ne doit pas être un simple outil passif d'observation. Sa valeur réside dans l'exploitation des données par les pilotes pour décider d'actions d'amélioration concrètes en cas d'écart par rapport aux cibles."
+    },
+    {
+        "module": "Démarche 5S",
+        "question": "Quel est l'ordre exact et la traduction usuelle des étapes de la démarche 5S ?",
+        "options": [
+            "Seiri (Nettoyage), Seiton (Débarras), Seiso (Ordre), Seiketsu (Rangement), Shitsuké (Rigueur).",
+            "Seiri (Débarras / Trier), Seiton (Rangement / Situer), Seiso (Nettoyage / Scintiller), Seiketsu (Ordre / Standardiser), Shitsuké (Rigueur / Suivre).",
+            "Seiri (Tri), Seiton (Standardisation), Seiso (Balayage), Seiketsu (Discipline), Shitsuké (Pérennisation).",
+            "Seiri (Ordre), Seiton (Propreté), Seiso (Débarras), Seiketsu (Rigueur), Shitsuké (Standardisation)."
+        ],
+        "correct": 1,
+        "explanation": "Les 5S sont dans l'ordre : Seiri (Débarras / Enlever l'inutile), Seiton (Rangement / Une place pour chaque chose), Seiso (Nettoyage / Inspecter), Seiketsu (Ordre / Maintenir la propreté) et Shitsuké (Rigueur / Pérenniser)."
+    },
+    {
+        "module": "Démarche 5S",
+        "question": "Quel principe régit l'étape « Seiton » (Rangement) ?",
+        "options": [
+            "Jeter tout ce qui n'a pas servi depuis plus de trois mois.",
+            "« Une place pour chaque chose et chaque chose à sa place ».",
+            "Nettoyer les outils après chaque cycle d'utilisation.",
+            "Rédiger un planning d'entretien pour le poste de travail."
+        ],
+        "correct": 1,
+        "explanation": "Le principe fondamental du Seiton (Rangement) est 'Une place pour chaque chose et chaque chose à sa place'. Les objets doivent être rangés de manière ergonomique et fonctionnelle en fonction de leur fréquence d'utilisation."
+    },
+    {
+        "module": "Démarche 5S",
+        "question": "Pourquoi la troisième étape « Seiso » (Nettoyage) est-elle essentielle pour l'auto-maintenance ?",
+        "options": [
+            "Parce qu'elle supprime définitivement le besoin d'un service maintenance dans l'usine.",
+            "Parce que nettoyer s'accompagne d'une inspection minutieuse permettant de détecter des fuites, fissures ou anomalies avant la panne.",
+            "Parce qu'elle consiste à réparer soi-même les composants électriques complexes.",
+            "Parce qu'elle oblige à repeindre les machines en blanc pour cacher les fuites d'huile."
+        ],
+        "correct": 1,
+        "explanation": "Dans la méthodologie 5S, 'Nettoyer c'est inspecter'. L'action physique de nettoyage permet à l'opérateur d'observer sa machine de près, de détecter des anomalies précoces (fixations lâches, fuites, usures) et de prévenir les pannes."
+    },
+    {
+        "module": "Démarche 5S",
+        "question": "Quelle est l'origine de la démarche 5S ?",
+        "options": [
+            "Elle a été créée en Allemagne pour les usines de chimie lourde dans les années 90.",
+            "Née du 'Training Within Industry' US pendant la 2nde GM, elle a été formalisée au Japon par Toyota (TPS).",
+            "C'est une réglementation obligatoire imposée par l'Union Européenne en 2000.",
+            "Elle a été développée par la NASA pour la maintenance des navettes spatiales."
+        ],
+        "correct": 1,
+        "explanation": "La méthode 5S trouve ses racines dans le programme américain TWI (Training Within Industry) de la Seconde Guerre mondiale, puis a été structurée et formalisée au Japon par Taïchi Ohno chez Toyota au sein du Toyota Production System (TPS)."
+    },
+    {
+        "module": "Démarche 5S",
+        "question": "Quel est l'objectif premier de la première étape « Seiri » (Débarras) ?",
+        "options": [
+            "Nettoyer le sol de l'atelier à grande eau.",
+            "Lutter contre l'accumulation en éliminant et en évacuant tout ce qui est inutile sur le poste.",
+            "Définir des marquages au sol pour les allées de circulation.",
+            "Rédiger les fiches d'instructions de montage."
+        ],
+        "correct": 1,
+        "explanation": "Seiri (Débarras) consiste à trier ce qui est nécessaire de ce qui ne l'est pas. On sépare l'utile de l'inutile pour désencombrer l'espace de travail en se basant sur la fréquence d'utilisation."
+    },
+    {
+        "module": "Démarche 5S",
+        "question": "À quoi sert la quatrième étape « Seiketsu » (Ordre / Standardiser) ?",
+        "options": [
+            "Jeter les vieux outils qui ne servent plus.",
+            "Maintenir la propreté, rendre évidents les écarts et standardiser les règles définies lors des 3 premières étapes.",
+            "Sanctionner les collaborateurs qui ne rangent pas leur poste.",
+            "Organiser un grand nettoyage général une fois par an."
+        ],
+        "correct": 1,
+        "explanation": "Seiketsu (Standardiser) vise à maintenir les résultats obtenus lors du tri, du rangement et du nettoyage. On crée des standards visuels (marquages, codes couleurs, photos du poste idéal) pour repérer immédiatement toute dérive."
+    },
+    {
+        "module": "Démarche 5S",
+        "question": "De qui dépend principalement la réussite de la cinquième étape « Shitsuké » (Rigueur / Suivre) ?",
+        "options": [
+            "Uniquement des prestataires de nettoyage externes.",
+            "De la hiérarchie pour le contrôle et de l'adhésion quotidienne de l'ensemble du personnel.",
+            "Uniquement du responsable qualité de l'entreprise.",
+            "De l'inspecteur du travail lors de ses visites annuelles."
+        ],
+        "correct": 1,
+        "explanation": "Shitsuké (Rigueur) consiste à pérenniser l'effort. Cela demande de la discipline individuelle, de la persévérance, des audits réguliers menés par la hiérarchie et une communication dynamique pour ancrer la méthode dans la culture d'entreprise."
+    },
+    {
+        "module": "Démarche 5S",
+        "question": "Par quoi est-il fortement recommandé de commencer une démarche 5S dans une entreprise ?",
+        "options": [
+            "Déployer la méthode sur l'ensemble des ateliers et des bureaux en même temps.",
+            "Créer un groupe de travail et commencer par une petite zone pilote (ex: une étagère, un poste de travail) pour garantir le succès.",
+            "Acheter des logiciels informatiques complexes avant toute action terrain.",
+            "Remplacer l'ensemble des machines de production par du matériel neuf."
+        ],
+        "correct": 1,
+        "explanation": "Pour garantir l'adhésion et démontrer l'efficacité du 5S, il faut commencer par définir un groupe de travail, puis choisir une zone pilote restreinte (ex: un établi, un magasin de stockage). Une fois réussie, la démarche est étendue."
+    },
+    {
+        "module": "Démarche 5S",
+        "question": "Quels indicateurs permettent de mesurer l'efficacité d'un projet 5S ?",
+        "options": [
+            "Uniquement le coût des produits de nettoyage achetés.",
+            "Les gains de productivité, la réduction du temps de recherche d'outils, la baisse des accidents et les scores des audits 5S.",
+            "Le nombre d'heures de formation théorique dispensées.",
+            "La quantité de déchets jetés lors de la première journée."
+        ],
+        "correct": 1,
+        "explanation": "L'efficacité du 5S se mesure par des critères concrets : gains de place, réduction des temps d'accès aux outils, amélioration de la sécurité (moins de chutes/glissades) et suivi des scores d'audits périodiques du poste."
+    },
+    {
+        "module": "Démarche 5S",
+        "question": "Quel est l'un des pièges ou freins majeurs lors du déploiement de la méthode 5S ?",
+        "options": [
+            "Faire participer les utilisateurs du poste de travail à la démarche.",
+            "Considérer le 5S comme une simple opération de 'ménage ponctuel' sans mettre en place de standards ni de suivi rigoureux.",
+            "Utiliser des bandes adhésives de couleur pour marquer les emplacements au sol.",
+            "Prendre des photos 'avant' et 'après' de la zone de travail."
+        ],
+        "correct": 1,
+        "explanation": "Le principal piège est de traiter le 5S comme un nettoyage de printemps exceptionnel. Sans standardisation (Seiketsu) ni rigueur/suivi régulier (Shitsuké), le poste de travail revient rapidement à son état de désordre initial."
+    },
+    {
+        "module": "Méthode AMDEC",
+        "question": "Quelle est la formule exacte de calcul de la criticité (C) dans une analyse AMDEC ?",
+        "options": [
+            "Criticité = Gravité + Occurrence + Détection.",
+            "Criticité = Gravité x Occurrence x Détection.",
+            "Criticité = (Gravité x Occurrence) / Détection.",
+            "Criticité = Fréquence x Importance x Maîtrise."
+        ],
+        "correct": 1,
+        "explanation": "La criticité (ou Indice de Priorité de Risque - IPR) se calcule en multipliant les notes attribuées à la Gravité de l'effet (G), l'Occurrence ou fréquence d'apparition de la cause (O) et la Détection ou probabilité de non-détection (D) : C = G x O x D."
+    },
+    {
+        "module": "Méthode AMDEC",
+        "question": "Quelles sont les trois typologies d'AMDEC couramment utilisées ?",
+        "options": [
+            "AMDEC Produit, AMDEC Processus, AMDEC Moyen de production (Moyen).",
+            "AMDEC Entrée, AMDEC Transformation, AMDEC Sortie.",
+            "AMDEC Stratégique, AMDEC Tactique, AMDEC Opérationnelle.",
+            "AMDEC Technique, AMDEC Humaine, AMDEC Environnementale."
+        ],
+        "correct": 0,
+        "explanation": "L'AMDEC s'applique à trois niveaux différents : le Produit (fiabilité de la conception face aux exigences client), le Processus (fiabilité de la fabrication/industrialisation) et le Moyen (fiabilité, sécurité et disponibilité des machines de production)."
+    },
+    {
+        "module": "Méthode AMDEC",
+        "question": "Quel est l'objectif d'une AMDEC Moyen (ou Machine) ?",
+        "options": [
+            "Calculer le prix de revient d'une machine outil.",
+            "Assurer la disponibilité et la sécurité d'un moyen de production en optimisant la maintenance préventive.",
+            "Vérifier la conformité esthétique du produit fabriqué par la machine.",
+            "Définir le planning des congés des techniciens de maintenance."
+        ],
+        "correct": 1,
+        "explanation": "L'AMDEC Moyen de production analyse les défaillances potentielles d'un équipement afin de cibler les actions de maintenance préventive, d'améliorer sa disponibilité (réduction des temps d'arrêt) et de sécuriser son utilisation."
+    },
+    {
+        "module": "Méthode AMDEC",
+        "question": "Que signifie la « Sûreté de fonctionnement » en milieu industriel ?",
+        "options": [
+            "L'obligation d'avoir des gardiens de sécurité à l'entrée du site.",
+            "L'aptitude d'un système à remplir sa mission dans des conditions données, englobant la Fiabilité, Disponibilité, Maintenabilité et Sécurité (FDMS).",
+            "La conformité financière des investissements dans les équipements.",
+            "Le fait que les machines fonctionnent sans consommer d'électricité."
+        ],
+        "correct": 1,
+        "explanation": "La sûreté de fonctionnement caractérise la confiance qu'on peut accorder à un système. Elle repose sur le triptyque FDMS : Fiabilité (remplir sa mission), Disponibilité (être prêt à fonctionner), Maintenabilité (facilité de réparation) et Sécurité (absence de danger)."
+    },
+    {
+        "module": "Méthode AMDEC",
+        "question": "Qu'est-ce qu'un « mode de défaillance » dans une étude AMDEC ?",
+        "options": [
+            "L'origine ou la cause physique d'une panne machine.",
+            "La manière dont un dispositif tombe en panne ou s'écarte de sa fonction requise (ex: fuite, blocage, court-circuit).",
+            "La conséquence finale de la panne pour le client.",
+            "Le protocole de maintenance appliqué pour réparer la machine."
+        ],
+        "correct": 1,
+        "explanation": "Le mode de défaillance est la manifestation physique de la panne ou du défaut (comment l'élément s'arrête de fonctionner ou fonctionne mal, ex : déformation, blocage, fuite, absence de signal)."
+    },
+    {
+        "module": "Méthode AMDEC",
+        "question": "À quel moment du cycle de vie d'un produit ou d'un processus est-il idéal de réaliser une AMDEC ?",
+        "options": [
+            "Le plus tard possible, une fois que la production de masse a commencé depuis plusieurs mois.",
+            "Aux étapes de conception et d'industrialisation, afin d'éliminer les défaillances potentielles avant la mise en œuvre.",
+            "Uniquement après la survenue d'un accident grave ou d'un retour client majeur.",
+            "Lors de la revente de l'outil industriel à un tiers."
+        ],
+        "correct": 1,
+        "explanation": "L'AMDEC est une méthode préventive. Elle doit être réalisée le plus tôt possible lors des phases de conception (produit) ou d'industrialisation (processus) pour corriger les faiblesses de conception avant que les modifications ne deviennent trop coûteuses."
+    },
+    {
+        "module": "Méthode AMDEC",
+        "question": "Qu'est-ce qu'un « effet de défaillance » dans une analyse AMDEC ?",
+        "options": [
+            "La cause technique à l'origine de la panne.",
+            "La conséquence du mode de défaillance sur le fonctionnement du système, sur les opérations ou sur le client.",
+            "Le coût financier de la réparation de la machine.",
+            "L'outil de détection automatique mis en place sur le poste."
+        ],
+        "correct": 1,
+        "explanation": "L'effet de la défaillance décrit les conséquences du dysfonctionnement (ex: arrêt de la production, blessure de l'opérateur, produit final non fonctionnel livré au client). C'est ce critère qui détermine la note de Gravité (G)."
+    },
+    {
+        "module": "Méthode AMDEC",
+        "question": "En sûreté de fonctionnement, que signifient les sigles MTBF et MTTR ?",
+        "options": [
+            "Mean Time Between Failures (temps moyen entre pannes) et Mean Time To Repair (temps moyen de réparation).",
+            "Maintenance Technical Board Frequency et Maintenance Team Task Report.",
+            "Maximum Time Before Failure et Minimum Time To React.",
+            "Mesure Temporaire de Blocage de Fluide et Module Technique de Traitement des Rejets."
+        ],
+        "correct": 0,
+        "explanation": "Le MTBF (temps moyen de bon fonctionnement entre deux pannes successives) mesure la fiabilité. Le MTTR (temps moyen nécessaire pour réparer et remettre le système en état de marche) mesure la maintenabilité."
+    },
+    {
+        "module": "Méthode AMDEC",
+        "question": "Quelle est la formule permettant de calculer la Disponibilité (D) théorique d'un équipement ?",
+        "options": [
+            "Disponibilité = MTBF / (MTBF + MTTR).",
+            "Disponibilité = MTTF / (MTBF + MTTR).",
+            "Disponibilité = MTBF / MTTR.",
+            "Disponibilité = (MTBF + MTTR) / MTBF."
+        ],
+        "correct": 0,
+        "explanation": "La disponibilité dépend de la fiabilité (MTBF) et de la maintenabilité (MTTR). Elle est définie par le rapport : MTBF / (MTBF + MTTR). Pour l'augmenter, il faut augmenter le MTBF (moins de pannes) ou réduire le MTTR (réparer plus vite)."
+    },
+    {
+        "module": "Méthode AMDEC",
+        "question": "Que doit faire le groupe de travail AMDEC si la criticité (C) calculée dépasse le seuil d'acceptabilité fixé ?",
+        "options": [
+            "Augmenter le seuil d'acceptabilité pour faire passer le risque dans le vert sans rien changer.",
+            "Définir et mettre en œuvre obligatoirement des actions correctives ou préventives (modification conception, plan de maintenance, détrompeur) puis réévaluer la criticité.",
+            "Arrêter définitivement le projet de fabrication du produit.",
+            "Rédiger un e-mail d'avertissement au client final pour le prévenir du risque."
+        ],
+        "correct": 1,
+        "explanation": "Lorsque la criticité initiale dépasse le seuil acceptable (seuil de criticité importante ou majeure), le groupe de travail doit obligatoirement proposer des actions d'amélioration (pour diminuer G, O ou D), puis procéder à une réévaluation pour calculer une criticité résiduelle."
+    },
+    {
+        "module": "Risques professionnels & SST",
+        "question": "Qu'impose l'article L. 4121-1 du Code du travail à l'employeur en matière de prévention ?",
+        "options": [
+            "De verser une indemnité financière systématique à chaque accident de travail.",
+            "De prendre les mesures nécessaires pour assurer la sécurité et protéger la santé physique et mentale des travailleurs.",
+            "De licencier tout salarié commettant une erreur de sécurité.",
+            "De fermer l'entreprise en cas de danger mineur."
+        ],
+        "correct": 1,
+        "explanation": "L'article L. 4121-1 pose l'obligation légale de sécurité de l'employeur. Il doit mettre en place des mesures de prévention des risques, d'information, de formation au poste et des moyens adaptés pour protéger ses salariés."
+    },
+    {
+        "module": "Risques professionnels & SST",
+        "question": "Quelle obligation incombe au salarié selon l'article L. 4122-1 du Code du travail ?",
+        "options": [
+            "Le salarié n'a aucune obligation, toute la responsabilité incombe à l'employeur.",
+            "Prendre soin, en fonction de sa formation et selon ses possibilités, de sa santé et de sa sécurité ainsi que de celles des autres personnes concernées.",
+            "Inspecter personnellement l'ensemble des locaux chaque matin avant de commencer son travail.",
+            "Refuser d'utiliser tout équipement de protection individuelle (EPI) inconfortable."
+        ],
+        "correct": 1,
+        "explanation": "Le salarié a l'obligation de veiller à sa sécurité et à celle de ses collègues (art. L. 4122-1) en appliquant les consignes et formations dispensées. Un non-respect peut être sanctionné disciplinairement ou pénalement."
+    },
+    {
+        "module": "Risques professionnels & SST",
+        "question": "Concernant le Document Unique d'Évaluation des Risques (DUER), quelle est la durée de conservation minimale obligatoire depuis les réformes de 2022 ?",
+        "options": [
+            "Il est conservé 3 ans, durée standard du SMI.",
+            "Il est conservé 5 ans, durée standard des litiges commerciaux.",
+            "Il est conservé au moins 40 ans (en versions successives) afin de garantir la traçabilité collective des expositions.",
+            "Il n'y a pas d'obligation de conservation historique, seule la dernière version en cours fait foi."
+        ],
+        "correct": 2,
+        "explanation": "La loi Santé au travail de 2022 impose de conserver le DUER et ses versions successives pendant une durée minimale de 40 ans à compter de leur création pour assurer la traçabilité des expositions professionnelles des salariés."
+    },
+    {
+        "module": "Risques professionnels & SST",
+        "question": "Qu'est-ce que le Document Unique d'Évaluation des Risques Professionnels (DUER) ?",
+        "options": [
+            "Un document facultatif décrivant l'historique financier de l'entreprise.",
+            "Un document obligatoire (dès 1 salarié) répertoriant tous les risques professionnels de l'entreprise et les actions de prévention associées.",
+            "Une liste des coordonnées de tous les médecins du travail du département.",
+            "Un registre confidentiel rédigé par l'inspection du travail."
+        ],
+        "correct": 1,
+        "explanation": "Le DUER est obligatoire pour toute entreprise dès le premier salarié. Il identifie les dangers par unité de travail, évalue les risques (criticité), liste les mesures existantes et planifie les actions de prévention à mener."
+    },
+    {
+        "module": "Risques professionnels & SST",
+        "question": "Quelle est la différence entre un « Danger » et un « Risque » en santé et sécurité au travail ?",
+        "options": [
+            "Ce sont deux synonymes parfaits utilisés dans la réglementation.",
+            "Le danger est la source intrinsèque de dommage (ex: une machine coupante), le risque est le résultat de l'exposition d'une personne à ce danger (ex: coupure au doigt).",
+            "Le danger concerne les accidents de la route, le risque concerne uniquement les maladies professionnelles.",
+            "Le danger est mesurable financièrement, le risque ne l'est pas."
+        ],
+        "correct": 1,
+        "explanation": "Le danger est une source ou situation potentiellement nocive (propriété intrinsèque, ex. électricité). Le risque est la concrétisation de ce danger suite à l'exposition d'un travailleur à cette source (ex: électrocution lors d'un contact)."
+    },
+    {
+        "module": "Risques professionnels & SST",
+        "question": "Quelles sanctions s'appliquent en cas de non-respect volontaire des règles de sécurité par un salarié ?",
+        "options": [
+            "Aucune sanction n'est légalement possible vis-à-vis d'un salarié.",
+            "Des sanctions disciplinaires par l'employeur (avertissement, mise à pied, licenciement) et des poursuites pénales en cas d'accident grave.",
+            "Uniquement une amende financière prélevée directement sur son salaire par l'inspecteur du travail.",
+            "Une réduction automatique de sa couverture maladie par la Sécurité Sociale."
+        ],
+        "correct": 1,
+        "explanation": "Le non-respect volontaire des consignes de sécurité (ex. refus de porter des EPI) constitue une faute. L'employeur peut appliquer des sanctions disciplinaires allant de l'avertissement au licenciement. En cas de blessure d'autrui, le salarié peut aussi être poursuivi pénalement."
+    },
+    {
+        "module": "Risques professionnels & SST",
+        "question": "Quel est le rôle du référent Santé-Sécurité au travail dans l'entreprise ?",
+        "options": [
+            "Remplacer l'employeur en assumant la responsabilité pénale et civile en SST.",
+            "Assister l'employeur dans sa démarche de prévention (évaluation des risques, planification et suivi des actions).",
+            "Soigner directement les salariés blessés dans l'atelier.",
+            "Contrôler les comptes financiers du CSE."
+        ],
+        "correct": 1,
+        "explanation": "Le référent Santé-Sécurité (obligatoire dans toutes les entreprises) conseille et assiste l'employeur dans l'évaluation des risques et le suivi des plans d'action. Sans délégation de pouvoir expresse, la responsabilité finale reste celle de l'employeur."
+    },
+    {
+        "module": "Risques professionnels & SST",
+        "question": "Quel est un des pouvoirs majeurs de l'inspecteur du travail en matière de santé et sécurité ?",
+        "options": [
+            "Modifier unilatéralement les salaires de l'entreprise.",
+            "Entrer librement dans l'entreprise, interroger les salariés, consulter les registres obligatoires et ordonner l'arrêt de travaux en cas de danger grave et imminent.",
+            "Licencier directement un salarié qui ne respecte pas les consignes.",
+            "Racheter les parts de l'entreprise en cas de faillite."
+        ],
+        "correct": 1,
+        "explanation": "L'inspecteur du travail dispose d'un droit de surveillance et d'investigation étendu. Il peut mener des contrôles inopinés, interroger le personnel, exiger la présentation des registres (DUER) et exiger l'arrêt temporaire d'un chantier ou d'un poste en cas de danger imminent."
+    },
+    {
+        "module": "Risques professionnels & SST",
+        "question": "Comment est calculé le taux de cotisation AT/MP (Accident du Travail / Maladie Professionnelle) payé par les entreprises ?",
+        "options": [
+            "Il est identique pour toutes les entreprises françaises, quel que soit leur effectif.",
+            "Il dépend de la taille de l'entreprise : collectif si <20 salariés, mixte de 20 à 149 salariés, individuel (basé sur la sinistralité réelle) si ≥150 salariés.",
+            "Il est négocié directement entre l'employeur et les assureurs privés.",
+            "Il est fixé uniquement en fonction du nombre de voitures de fonction de l'entreprise."
+        ],
+        "correct": 1,
+        "explanation": "La tarification de la cotisation AT/MP (payée par l'employeur) varie selon l'effectif : elle est collective (mutualisée par secteur) pour les petites structures, mixte pour les moyennes, et individuelle (liée directement au nombre d'accidents réels dans l'entreprise) pour les structures de 150 salariés et plus."
+    },
+    {
+        "module": "Risques professionnels & SST",
+        "question": "Quel est le premier principe général de prévention parmi les 9 fixés par le Code du travail ?",
+        "options": [
+            "Fournir des équipements de protection individuelle (EPI).",
+            "Éviter les risques (supprimer le danger ou l'exposition au danger).",
+            "Remplacer ce qui est dangereux par ce qui l'est moins.",
+            "Planifier la prévention en y intégrant la technique et l'organisation."
+        ],
+        "correct": 1,
+        "explanation": "Le tout premier principe des 9 principes généraux de prévention (L. 4121-2) est 'Éviter les risques'. Si le risque ne peut pas être évité, il faut alors l'évaluer, le combattre à la source, adapter le travail, et privilégier la protection collective sur la protection individuelle (EPI)."
+    },
+    {
+        "module": "Ergonomie & TMS",
+        "question": "En France, quel pourcentage des maladies professionnelles reconnues est attribuable aux Troubles Musculo-Squelettiques (TMS) ?",
+        "options": [
+            "Environ 25 %.",
+            "Environ 50 %.",
+            "Environ 86 %.",
+            "Plus de 95 %."
+        ],
+        "correct": 2,
+        "explanation": "Les TMS constituent la première cause de maladie professionnelle reconnue en France, représentant environ 86 % des maladies professionnelles déclarées au régime général de la Sécurité sociale."
+    },
+    {
+        "module": "Ergonomie & TMS",
+        "question": "Quels sont les trois grands domaines ou axes d'étude de l'ergonomie ?",
+        "options": [
+            "L'ergonomie mécanique, électrique et thermique.",
+            "L'ergonomie physique (biomécanique, postures), l'ergonomie cognitive (charge mentale, vigilance) et l'ergonomie organisationnelle (structures de travail, flux).",
+            "L'ergonomie préventive, corrective et curative.",
+            "L'ergonomie du produit, de l'atelier et des bureaux."
+        ],
+        "correct": 1,
+        "explanation": "L'ergonomie s'organise en 3 branches complémentaires : physique (physiologie, postures contraignantes, TMS), cognitive (attention, mémoire, charge mentale) et organisationnelle (gestion des flux, horaires, communication, division des tâches)."
+    },
+    {
+        "module": "Ergonomie & TMS",
+        "question": "Quels facteurs biomécaniques favorisent principalement l'apparition des TMS ?",
+        "options": [
+            "La répétitivité des gestes, l'application d'efforts musculaires intenses, les postures extrêmes ou prolongées, et l'absence de récupération.",
+            "Le manque de luminosité sur le poste et le niveau sonore ambiant.",
+            "Le port d'équipements de protection trop légers.",
+            "L'utilisation d'outils à commande numérique."
+        ],
+        "correct": 0,
+        "explanation": "Les principaux facteurs biomécaniques de survenue des TMS sont la répétitivité élevée des gestes, la force/efforts musculaires requis, les amplitudes articulaires extrêmes (postures inconfortables) et la durée d'exposition sans pauses suffisantes."
+    },
+    {
+        "module": "Ergonomie & TMS",
+        "question": "Comment définit-on généralement l'« Ergonomie » ?",
+        "options": [
+            "Une méthode de calcul des temps et des mouvements pour accélérer les cadences de production.",
+            "L'étude scientifique des relations entre l'Homme et ses moyens, méthodes et milieux de travail afin d'adapter le travail à l'Homme.",
+            "Une technique de design industriel pour rendre les objets plus esthétiques.",
+            "Le fait d'organiser des séances d'étirement obligatoires le matin."
+        ],
+        "correct": 1,
+        "explanation": "L'ergonomie est la discipline scientifique qui vise à adapter le travail (outils, organisation, environnement) aux caractéristiques physiologiques, cognitives et psychologiques de l'Homme, conciliant ainsi santé des salariés et efficacité de l'entreprise."
+    },
+    {
+        "module": "Ergonomie & TMS",
+        "question": "Quelle est la première cause d'inaptitude médicale au travail avant 45 ans en France ?",
+        "options": [
+            "La perte d'audition d'origine professionnelle.",
+            "La lombalgie (mal de dos lié aux manutentions et postures).",
+            "Les accidents de trajet.",
+            "Les maladies d'origine chimique."
+        ],
+        "correct": 1,
+        "explanation": "La lombalgie représente la première cause d'inaptitude médicale au travail chez les salariés de moins de 45 ans en France, mettant en évidence l'importance cruciale de l'ergonomie physique et des aides à la manutention."
+    },
+    {
+        "module": "Ergonomie & TMS",
+        "question": "Quels sont les facteurs organisationnels influant sur les TMS ?",
+        "options": [
+            "Uniquement la marque des outils manuels utilisés.",
+            "La fréquence de répétition des gestes, le travail en flux tendu, le manque d'autonomie, l'absence de pauses et le rythme imposé.",
+            "La présence ou l'absence d'un délégué syndical dans l'atelier.",
+            "La forme géométrique des tables de travail."
+        ],
+        "correct": 1,
+        "explanation": "L'organisation du travail (cadences, flux tendus, absence de micro-pauses de récupération, manque de polyvalence) influence directement l'exposition physique et mentale des salariés, favorisant les TMS."
+    },
+    {
+        "module": "Ergonomie & TMS",
+        "question": "Comment les facteurs psychosociaux (stress, pression) contribuent-ils à l'apparition des TMS ?",
+        "options": [
+            "Ils n'ont aucun lien physique avec les articulations ou les muscles.",
+            "Le stress augmente la tension musculaire, perturbe la perception de la fatigue et diminue les capacités de récupération de l'organisme.",
+            "Ils forcent les salariés à travailler plus d'heures que prévu par la loi.",
+            "Ils entraînent une usure directe des outils de travail."
+        ],
+        "correct": 1,
+        "explanation": "Les facteurs psychosociaux (stress, pression temporelle, manque de reconnaissance) provoquent des réactions physiologiques comme l'augmentation permanente du tonus musculaire, réduisant la micro-circulation et favorisant l'apparition précoce de douleurs articulaires."
+    },
+    {
+        "module": "Ergonomie & TMS",
+        "question": "Pourquoi est-il crucial d'étudier le « travail réel » plutôt que le « travail prescrit » en ergonomie ?",
+        "options": [
+            "Parce que le travail prescrit n'existe pas dans les entreprises.",
+            "Parce que le travail réel intègre la gestion des aléas, la variabilité des opérateurs et les stratégies d'adaptation non écrites dans les procédures.",
+            "Pour pouvoir sanctionner les salariés qui ne suivent pas les procédures écrites.",
+            "Parce que le travail prescrit est confidentiel et réservé à la direction."
+        ],
+        "correct": 1,
+        "explanation": "Le travail prescrit (ce qui est écrit dans la procédure) est souvent théorique et idéal. Le travail réel intègre les imprévus, la poussière, les outils usés, et les ajustements que l'opérateur doit faire, ce qui génère des contraintes physiques et mentales non prévues."
+    },
+    {
+        "module": "Ergonomie & TMS",
+        "question": "Citez un outil d'évaluation de la charge posturale couramment utilisé par les ergonomes :",
+        "options": [
+            "La balance des paiements.",
+            "La méthode RULA (Rapid Upper Limb Assessment) ou REBA (Rapid Entire Body Assessment).",
+            "La cartographie des flux de valeur (VSM).",
+            "Le diagramme d'Ishikawa."
+        ],
+        "correct": 1,
+        "explanation": "RULA et REBA sont des grilles d'évaluation posturale rapides permettant de coter les angles des différentes articulations (bras, tronc, cou, jambes), le poids manipulé et l'activité musculaire pour évaluer le niveau de risque de TMS."
+    },
+    {
+        "module": "Ergonomie & TMS",
+        "question": "Quelles sont les conséquences directes des TMS pour une entreprise ?",
+        "options": [
+            "Uniquement une baisse mineure de la consommation d'énergie.",
+            "L'augmentation de l'absentéisme, la hausse du taux de rotation du personnel (turnover), la baisse de qualité (erreurs) et la hausse des cotisations AT/MP.",
+            "Une exonération de taxe d'apprentissage par l'État.",
+            "L'obligation légale d'automatiser 100% de la production."
+        ],
+        "correct": 1,
+        "explanation": "Les TMS génèrent des coûts importants pour l'entreprise : désorganisation liée à l'absentéisme, perte de savoir-faire, baisse de la qualité due au remplacement temporaire de salariés qualifiés, et augmentation des cotisations d'assurance AT/MP."
+    },
+    {
+        "module": "Environnement - Réglementation",
+        "question": "Quelle est la différence entre un « aspect environnemental » et un « impact environnemental » selon la norme ISO 14001 ?",
+        "options": [
+            "L'aspect concerne les sols, l'impact concerne les rejets dans l'eau.",
+            "L'aspect est la cause (élément d'activité interagissant avec l'environnement), l'impact est l'effet (modification de l'environnement qui en résulte).",
+            "L'aspect est facultatif lors des audits, l'impact est obligatoirement mesuré.",
+            "Ce sont deux termes équivalents."
+        ],
+        "correct": 1,
+        "explanation": "L'aspect environnemental est l'activité, le produit ou le service qui interagit avec l'environnement (ex: consommation d'eau, rejet de fumées). L'impact environnemental est le résultat de cette interaction sur le milieu naturel (ex: épuisement des nappes phréatiques, pollution de l'air)."
+    },
+    {
+        "module": "Environnement - Réglementation",
+        "question": "Qu'est-ce que la Responsabilité Élargie du Producteur (REP) ?",
+        "options": [
+            "L'obligation d'étendre la garantie commerciale des produits à 10 ans.",
+            "Un principe de pollueur-payeur où les producteurs doivent financer ou gérer la fin de vie des produits qu'ils mettent sur le marché.",
+            "L'obligation légale d'importer uniquement des matières recyclées.",
+            "Le devoir de planter un arbre pour chaque produit vendu par l'entreprise."
+        ],
+        "correct": 1,
+        "explanation": "La REP (Responsabilité Élargie du Producteur) découle du principe pollueur-payeur : les metteurs sur le marché (fabricants, importateurs) doivent financer ou organiser la collecte et le traitement des déchets issus de leurs produits (ex. via des éco-organismes pour les piles, emballages, DEEE)."
+    },
+    {
+        "module": "Environnement - Réglementation",
+        "question": "Selon la loi française (Art. L. 541-4-3), sous quelles conditions un déchet peut-il perdre son statut de déchet ?",
+        "options": [
+            "Dès qu'il est cédé ou revendu à un particulier ou jeté dans une benne publique.",
+            "Après traitement et valorisation, s'il remplit des conditions d'usage spécifique, d'existence de marché, de conformité technique et d'absence d'effets nocifs globaux.",
+            "Lorsque le producteur paie une taxe d'exemption auprès de la DREAL.",
+            "Lorsque sa durée de stockage dans l'entreprise dépasse 3 ans."
+        ],
+        "correct": 1,
+        "explanation": "La sortie du statut de déchet (SSD) est un processus réglementé strict : la matière recyclée ou valorisée doit répondre à un besoin précis, avoir un marché, être conforme aux exigences techniques existantes et ne pas aggraver les impacts sur la santé ou l'environnement."
+    },
+    {
+        "module": "Environnement - Réglementation",
+        "question": "Quelle est la définition légale d'un « déchet » selon le Code de l'environnement ?",
+        "options": [
+            "Toute matière organique non biodégradable.",
+            "Tout bien meuble dont le détenteur se défait ou dont il a l'obligation de se défaire.",
+            "Uniquement les emballages plastiques et métalliques jetés par les industriels.",
+            "Tout produit n'ayant aucune valeur financière sur le marché."
+        ],
+        "correct": 1,
+        "explanation": "Selon la loi, un déchet est 'tout résidu d'un processus de production, de transformation ou d'utilisation, toute substance, matériau, produit ou plus généralement tout bien meuble dont le détenteur se défait ou dont il a l'intention ou l'obligation de se défaire'."
+    },
+    {
+        "module": "Environnement - Réglementation",
+        "question": "Quelles sont les 3 grandes catégories de déchets industriels ?",
+        "options": [
+            "Déchets organiques, déchets métalliques, déchets plastiques.",
+            "Déchets Dangereux (DD), Déchets Non Dangereux (DND) et Déchets Inertes (DI).",
+            "Déchets recyclables, déchets brûlables, déchets enfouissables.",
+            "Déchets liquides, déchets gazeux, déchets solides."
+        ],
+        "correct": 1,
+        "explanation": "On classe les déchets en 3 catégories réglementaires : les Déchets Dangereux (DD - nécessitant un BSD), les Déchets Non Dangereux (DND - assimilables aux ordures ménagères) et les Déchets Inertes (DI - gravats, verre, qui ne subissent aucune modification physique ou chimique)."
+    },
+    {
+        "module": "Environnement - Réglementation",
+        "question": "Jusqu'à quel moment un producteur de déchets est-il légalement responsable de ceux-ci ?",
+        "options": [
+            "Jusqu'au moment où le camion du transporteur quitte le site de l'entreprise.",
+            "Jusqu'à leur élimination ou valorisation finale (responsabilité de bout en bout).",
+            "Jusqu'à la signature du contrat annuel avec le prestataire de gestion des déchets.",
+            "Pendant une durée fixe de 30 jours après la production du déchet."
+        ],
+        "correct": 1,
+        "explanation": "Le producteur d'un déchet en est responsable vis-à-vis de la loi jusqu'à son élimination ou sa valorisation finale. Si le transporteur ou le centre de traitement commet une infraction ou pollue, la responsabilité du producteur d'origine peut être engagée."
+    },
+    {
+        "module": "Environnement - Réglementation",
+        "question": "Quelle pratique d'élimination des déchets est strictement interdite pour les entreprises ?",
+        "options": [
+            "Le tri sélectif des cartons et des plastiques.",
+            "Le brûlage des déchets à l'air libre et le mélange de déchets dangereux avec d'autres déchets.",
+            "Le stockage temporaire des déchets en zone de quarantaine étanche.",
+            "La revente de palettes en bois à un prestataire de valorisation."
+        ],
+        "correct": 1,
+        "explanation": "Il est strictement interdit aux entreprises (et particuliers) de brûler des déchets à l'air libre (pollution de l'air) et de mélanger des déchets dangereux avec d'autres catégories de déchets (ce qui complique ou empêche leur traitement)."
+    },
+    {
+        "module": "Environnement - Réglementation",
+        "question": "Qu'est-ce que l'« éco-conception » d'un produit ?",
+        "options": [
+            "Réduire le prix de vente du produit pour le rendre plus écologique.",
+            "Prendre en compte les impacts environnementaux sur l'ensemble du cycle de vie du produit, dès sa conception.",
+            "Remplacer l'ensemble de l'emballage carton par du plastique transparent.",
+            "Ajouter un logo vert sur l'étiquette du produit sans modifier sa fabrication."
+        ],
+        "correct": 1,
+        "explanation": "L'éco-conception consiste à intégrer l'environnement dès la conception d'un produit ou d'un service, en analysant son cycle de vie (de l'extraction des matières premières à la fabrication, au transport, à l'usage et au recyclage final) pour minimiser ses impacts négatifs."
+    },
+    {
+        "module": "Environnement - Réglementation",
+        "question": "Qu'est-ce que l'« Écologie Industrielle et Territoriale » (EIT) ?",
+        "options": [
+            "L'obligation de planter des espaces verts autour des zones industrielles.",
+            "La mise en synergie d'entreprises d'un même territoire pour que les déchets/ressources des unes deviennent les matières premières des autres.",
+            "Le contrôle des rejets d'eaux usées par les mairies du territoire.",
+            "Un parti politique défendant la désindustrialisation des campagnes."
+        ],
+        "correct": 1,
+        "explanation": "L'écologie industrielle et territoriale s'inspire du fonctionnement des écosystèmes naturels : les flux de matières, d'énergie ou d'eau d'une usine (ex. chaleur fatale, eau de refroidissement, déchets de bois) sont récupérés et valorisés par les entreprises voisines."
+    },
+    {
+        "module": "Environnement - Réglementation",
+        "question": "Quelle est la définition de l'« Économie Circulaire » ?",
+        "options": [
+            "Un système financier basé sur le troc local sans passer par les banques.",
+            "Un système de production et d'échange conçu pour minimiser les prélèvements de ressources et les émissions polluantes à chaque étape du cycle de vie.",
+            "La vente de produits uniquement dans un rayon de 50 km autour de l'usine.",
+            "Le recyclage obligatoire des pièces de monnaie en fin de vie."
+        ],
+        "correct": 1,
+        "explanation": "L'économie circulaire s'oppose au modèle linéaire traditionnel ('extraire, fabriquer, consommer, jeter'). Elle vise à optimiser l'usage des ressources et à boucler les cycles de vie à travers l'éco-conception, l'écologie industrielle, le recyclage et l'économie de la fonctionnalité."
+    },
+    {
+        "module": "Acteurs Environnement & REACH",
+        "question": "Quelles sont les missions principales de l'ADEME ?",
+        "options": [
+            "Contrôler le respect des limitations de vitesse par les transporteurs de déchets.",
+            "Accompagner la transition écologique en apportant expertises, conseils et subventions aux entreprises, collectivités et à l'État.",
+            "Délivrer les autorisations d'exploitation aux centrales nucléaires.",
+            "Rédiger les lois de protection de l'environnement adoptées par le Parlement."
+        ],
+        "correct": 1,
+        "explanation": "L'ADEME (Agence de la transition écologique) est un établissement public sous la tutelle de l'État. Elle conseille et finance des projets d'efficacité énergétique, de gestion des déchets, d'éco-conception et de décarbonation."
+    },
+    {
+        "module": "Acteurs Environnement & REACH",
+        "question": "Qu'impose la réglementation européenne REACH concernant les substances chimiques ?",
+        "options": [
+            "L'interdiction totale d'utiliser des produits chimiques dans l'Union Européenne.",
+            "L'enregistrement, l'évaluation et l'autorisation des substances chimiques afin de protéger la santé humaine et l'environnement.",
+            "La baisse des taxes douanières sur les produits chimiques importés d'Asie.",
+            "L'obligation de recruter un ingénieur chimiste dans chaque entreprise de plus de 50 salariés."
+        ],
+        "correct": 1,
+        "explanation": "REACH vise à mieux connaître les substances chimiques produites ou importées dans l'UE, à évaluer leurs risques pour la santé et l'environnement, à responsabiliser les fabricants et à encourager le remplacement des substances les plus préoccupantes (comme les SVHC)."
+    },
+    {
+        "module": "Acteurs Environnement & REACH",
+        "question": "Quelle est l'utilité du Bordereau de Suivi des Déchets (BSD) ?",
+        "options": [
+            "Déclarer les matières premières importées aux services des douanes.",
+            "Assurer la traçabilité complète des déchets dangereux, depuis leur production jusqu'à leur centre d'élimination ou valorisation finale.",
+            "Afficher les consignes de sécurité pour la manutention des bennes à déchets.",
+            "Comptabiliser le poids des camions pour le paiement de la taxe carbone."
+        ],
+        "correct": 1,
+        "explanation": "Le BSD (Bordereau de Suivi des Déchets) est un formulaire obligatoire en France pour accompagner et tracer les déchets dangereux. Il garantit qu'un déchet a bien été traité dans un centre agréé et sert de preuve pour le producteur."
+    },
+    {
+        "module": "Acteurs Environnement & REACH",
+        "question": "Quel est le rôle de la DREAL en matière d'environnement industriel ?",
+        "options": [
+            "Soigner les animaux sauvages blessés à proximité des usines.",
+            "Piloter les politiques publiques d'aménagement et de transport, et contrôler la conformité environnementale des entreprises (ICPE).",
+            "Fixer le prix de vente de l'électricité et du gaz pour les entreprises.",
+            "Vendre des crédits carbone aux entreprises polluantes."
+        ],
+        "correct": 1,
+        "explanation": "La DREAL (Direction Régionale de l'Environnement, de l'Aménagement et du Logement) représente l'État en région. Elle inspecte les installations classées pour la protection de l'environnement (ICPE) et veille au respect des normes de pollution."
+    },
+    {
+        "module": "Acteurs Environnement & REACH",
+        "question": "Qu'est-ce qu'une installation classée pour la protection de l'environnement (ICPE) ?",
+        "options": [
+            "Un bureau administratif s'occupant de l'archivage des dossiers de sécurité.",
+            "Une exploitation industrielle ou agricole susceptible de présenter des dangers ou des inconvénients pour la commodité du voisinage, la santé ou l'environnement.",
+            "Uniquement les centres de stockage de déchets nucléaires.",
+            "Une zone de forêt protégée par des gardes nationaux."
+        ],
+        "correct": 1,
+        "explanation": "Les ICPE (usines, entrepôts, carrières, élevages) sont des installations dont l'activité présente des risques de pollution, d'incendie ou de nuisances. Elles sont soumises à une réglementation stricte (déclaration, enregistrement ou autorisation) et contrôlées par la DREAL."
+    },
+    {
+        "module": "Acteurs Environnement & REACH",
+        "question": "Qu'est-ce que le délit d'« écocide » récemment introduit dans la loi française ?",
+        "options": [
+            "Le fait de couper des arbres dans son jardin privé sans déclaration préalable.",
+            "Une atteinte grave et durable à l'environnement commise de manière intentionnelle en violant des règles de sécurité ou de gestion des déchets.",
+            "Toute consommation d'énergie d'origine fossile au sein d'une usine.",
+            "Le rejet accidentel d'eau de pluie dans le réseau d'égouts."
+        ],
+        "correct": 1,
+        "explanation": "L'écocide est un délit grave punissant les atteintes les plus sévères, graves et durables à la santé, à la faune, à la flore ou à la qualité de l'air/sol/eau, commises par le non-respect délibéré de la réglementation environnementale."
+    },
+    {
+        "module": "Acteurs Environnement & REACH",
+        "question": "À quoi sert le « Registre des déchets » obligatoire pour les entreprises ?",
+        "options": [
+            "À lister les noms des employés travaillant au tri sélectif.",
+            "À enregistrer chronologiquement tous les déchets expédiés (nature, quantité, transporteur, destination) pour en assurer la traçabilité.",
+            "À calculer le montant de la taxe sur la valeur ajoutée (TVA).",
+            "À obtenir d'office la certification ISO 14001."
+        ],
+        "correct": 1,
+        "explanation": "Le registre des déchets (dangereux ou non) doit être tenu à jour par l'entreprise productrice. Il récapitule tous les flux sortants et sert de base de contrôle pour la DREAL et pour rédiger la déclaration annuelle des déchets."
+    },
+    {
+        "module": "Acteurs Environnement & REACH",
+        "question": "Que régit la réglementation européenne CLP vis-à-vis des produits chimiques ?",
+        "options": [
+            "La limitation de la consommation d'eau dans la fabrication des détergents.",
+            "La classification, l'étiquetage et l'emballage (Classification, Labelling, Packaging) des substances et mélanges dangereux.",
+            "Le prix de vente maximal des solvants recyclés.",
+            "L'interdiction d'exporter des produits cosmétiques hors de l'UE."
+        ],
+        "correct": 1,
+        "explanation": "Le règlement CLP définit les règles européennes de classification des dangers des produits chimiques, impose les pictogrammes de danger normalisés (fond blanc, losange rouge) et les phrases de sécurité/mentions d'avertissement sur les étiquettes."
+    },
+    {
+        "module": "Acteurs Environnement & REACH",
+        "question": "Qu'est-ce que le Bilan d'Émissions de Gaz à Effet de Serre (BEGES) ?",
+        "options": [
+            "Un filtre installé sur les cheminées pour retenir le gaz carbonique.",
+            "Une évaluation quantitative des émissions de GES produites par les activités de l'entreprise sur une année, obligatoire pour certaines structures.",
+            "Une taxe payée à l'État basée sur le nombre de camions de livraison.",
+            "Un contrat d'achat d'électricité verte conclu avec un fournisseur."
+        ],
+        "correct": 1,
+        "explanation": "Le BEGES (ou bilan carbone) évalue l'empreinte carbone d'une organisation en mesurant ses émissions directes (Scope 1), indirectes liées à l'énergie (Scope 2) et autres émissions indirectes (Scope 3), afin de définir un plan de réduction des émissions."
+    },
+    {
+        "module": "Acteurs Environnement & REACH",
+        "question": "Quel est le but du dispositif des Certificats d'Économie d'Énergie (CEE) en France ?",
+        "options": [
+            "Sanctionner financièrement les entreprises qui consomment trop de gaz.",
+            "Obliger les vendeurs d'énergie (les 'obligés') à inciter et subventionner les travaux d'efficacité énergétique chez les consommateurs.",
+            "Délivrer des diplômes aux ingénieurs spécialisés en éco-conception.",
+            "Réduire le prix d'achat du fioul domestique pour les industriels."
+        ],
+        "correct": 1,
+        "explanation": "Créé en 2005 (loi POPE), le dispositif des CEE impose aux fournisseurs d'énergie (les obligés) de réaliser des économies d'énergie en finançant des travaux d'isolation, de chauffage performant ou de rénovation auprès des entreprises et des particuliers."
+    }
+];
+
+        // State variables
+        let currentMode = 'study'; // 'study' or 'exam'
+        let selectedModules = [];
+        let activeQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = []; // stores indices of user's chosen options
+        let results = []; // stores {questionObj, selectedOriginalIdx, isCorrect, currentMappedOptions}
+        let startTime = null;
+        let examTimerInterval = null;
+        let timerSeconds = 30;
+        let soundEnabled = true;
+        let currentMappedOptions = []; // Shuffled options for current question
+
+        // Web Audio API Sound Synthesizer
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playSound(type) {
+            if (!soundEnabled) return;
+            try {
+                initAudio();
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                const now = audioCtx.currentTime;
+
+                if (type === 'correct') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, now); // C5
+                    gain.gain.setValueAtTime(0, now);
+                    gain.gain.linearRampToValueAtTime(0.15, now + 0.05);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+                    
+                    osc.frequency.setValueAtTime(659.25, now + 0.1); // E5
+                    gain.gain.setValueAtTime(0.15, now + 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+
+                    osc.start(now);
+                    osc.stop(now + 0.4);
+                } else if (type === 'incorrect') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(180, now);
+                    osc.frequency.linearRampToValueAtTime(90, now + 0.3);
+                    
+                    gain.gain.setValueAtTime(0, now);
+                    gain.gain.linearRampToValueAtTime(0.08, now + 0.05);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+
+                    osc.start(now);
+                    osc.stop(now + 0.4);
+                } else if (type === 'fanfare') {
+                    const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+                    notes.forEach((freq, idx) => {
+                        const noteOsc = audioCtx.createOscillator();
+                        const noteGain = audioCtx.createGain();
+                        noteOsc.connect(noteGain);
+                        noteGain.connect(audioCtx.destination);
+                        
+                        noteOsc.type = 'sine';
+                        noteOsc.frequency.setValueAtTime(freq, now + idx * 0.12);
+                        
+                        noteGain.gain.setValueAtTime(0, now + idx * 0.12);
+                        noteGain.gain.linearRampToValueAtTime(0.12, now + idx * 0.12 + 0.03);
+                        noteGain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.3);
+                        
+                        noteOsc.start(now + idx * 0.12);
+                        noteOsc.stop(now + idx * 0.12 + 0.35);
+                    });
+                }
+            } catch (error) {
+                console.error("Audio error:", error);
+            }
+        }
+
+        // Fisher-Yates Shuffle Algorithm
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            setupAudioToggle();
+            populateModulesList();
+        });
+
+        function setupAudioToggle() {
+            const btn = document.getElementById('audio-toggle');
+            const onIcon = document.getElementById('sound-on-icon');
+            const offIcon = document.getElementById('sound-off-icon');
+
+            btn.addEventListener('click', () => {
+                soundEnabled = !soundEnabled;
+                if (soundEnabled) {
+                    onIcon.style.display = 'block';
+                    offIcon.style.display = 'none';
+                    initAudio();
+                } else {
+                    onIcon.style.display = 'none';
+                    offIcon.style.display = 'block';
+                }
+            });
+        }
+
+        function populateModulesList() {
+            const modules = [...new Set(questionsDB.map(q => q.module))].sort();
+            const listContainer = document.getElementById('modules-list');
+            listContainer.innerHTML = '';
+
+            modules.forEach((mod, idx) => {
+                const checked = 'checked';
+                listContainer.innerHTML += `
+                    <div>
+                        <input type="checkbox" class="module-checkbox" id="mod-${idx}" value="${mod}" ${checked} onchange="updateSelectedModules()">
+                        <label class="module-label" for="mod-${idx}">${mod}</label>
+                    </div>
+                `;
+            });
+            updateSelectedModules();
+        }
+
+        function updateQuestionCountLabel() {
+            const slider = document.getElementById('question-count-slider');
+            const label = document.getElementById('question-count-label');
+            label.textContent = slider.value + ' questions';
+        }
+
+        function updateSelectedModules() {
+            const checkboxes = document.querySelectorAll('.module-checkbox');
+            selectedModules = [];
+            checkboxes.forEach(cb => {
+                if (cb.checked) {
+                    selectedModules.push(cb.value);
+                }
+            });
+
+            const startBtn = document.getElementById('start-btn');
+            const slider = document.getElementById('question-count-slider');
+            const label = document.getElementById('question-count-label');
+
+            if (selectedModules.length === 0) {
+                startBtn.disabled = true;
+                startBtn.textContent = 'Sélectionnez au moins un module';
+            } else if (selectedModules.length === 1) {
+                startBtn.disabled = false;
+                startBtn.textContent = "Lancer l'entraînement";
+                
+                // Enforce exactly 10 questions when only 1 module is selected
+                slider.disabled = true;
+                slider.value = 10;
+                label.textContent = '10 questions (Fixé)';
+            } else {
+                startBtn.disabled = false;
+                startBtn.textContent = "Lancer l'entraînement";
+                slider.disabled = false;
+                updateQuestionCountLabel();
+            }
+        }
+
+        function toggleAllModules(select) {
+            const checkboxes = document.querySelectorAll('.module-checkbox');
+            checkboxes.forEach(cb => {
+                cb.checked = select;
+            });
+            updateSelectedModules();
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            document.getElementById('mode-study').classList.toggle('active', mode === 'study');
+            document.getElementById('mode-exam').classList.toggle('active', mode === 'exam');
+            playSound('correct');
+        }
+
+        function startQuiz() {
+            // Filter questions based on selected modules
+            let pool = questionsDB.filter(q => selectedModules.includes(q.module));
+            
+            // Shuffle the complete pool of questions using Fisher-Yates
+            shuffleArray(pool);
+
+            // Determine question count
+            let questionCount = 20;
+            if (selectedModules.length === 1) {
+                questionCount = 10;
+            } else {
+                questionCount = parseInt(document.getElementById('question-count-slider').value);
+            }
+
+            // Slice the required amount of questions
+            activeQuestions = pool.slice(0, Math.min(questionCount, pool.length));
+
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            results = [];
+            startTime = new Date();
+
+            // Switch view
+            document.getElementById('welcome-view').classList.remove('active');
+            document.getElementById('quiz-view').classList.add('active');
+
+            // Setup timer badge
+            const timerBadge = document.getElementById('quiz-timer');
+            if (currentMode === 'exam') {
+                timerBadge.style.display = 'flex';
+                resetTimer();
+            } else {
+                timerBadge.style.display = 'none';
+            }
+
+            showQuestion();
+        }
+
+        function resetTimer() {
+            clearInterval(examTimerInterval);
+            timerSeconds = 30;
+            const textSpan = document.getElementById('timer-text');
+            const badge = document.getElementById('quiz-timer');
+            badge.classList.remove('warning');
+            textSpan.textContent = timerSeconds + 's';
+
+            examTimerInterval = setInterval(() => {
+                timerSeconds--;
+                textSpan.textContent = timerSeconds + 's';
+
+                if (timerSeconds <= 5) {
+                    badge.classList.add('warning');
+                }
+
+                if (timerSeconds <= 0) {
+                    clearInterval(examTimerInterval);
+                    selectTimeout();
+                }
+            }, 1000);
+        }
+
+        function selectTimeout() {
+            const selectedOpt = document.querySelector('.option-card.selected');
+            const selectedOriginalIdx = selectedOpt ? parseInt(selectedOpt.dataset.originalIdx) : null;
+            validateAnswer(selectedOriginalIdx);
+        }
+
+        function showQuestion() {
+            const questionObj = activeQuestions[currentQuestionIndex];
+            
+            // Header stats
+            document.getElementById('current-module-badge').textContent = questionObj.module;
+            document.getElementById('question-counter').textContent = `Question ${currentQuestionIndex + 1}/${activeQuestions.length}`;
+            
+            // Progress bar
+            const percent = ((currentQuestionIndex) / activeQuestions.length) * 100;
+            document.getElementById('progress-bar').style.width = `${percent}%`;
+
+            // Question text
+            document.getElementById('question-text').textContent = questionObj.question;
+
+            // Map options to keep track of their original index and then shuffle them
+            currentMappedOptions = questionObj.options.map((opt, idx) => ({ text: opt, originalIdx: idx }));
+            shuffleArray(currentMappedOptions);
+
+            // Render options
+            const optionsContainer = document.getElementById('options-list');
+            optionsContainer.innerHTML = '';
+            currentMappedOptions.forEach((opt, renderIdx) => {
+                optionsContainer.innerHTML += `
+                    <div class="option-card" data-render-idx="${renderIdx}" data-original-idx="${opt.originalIdx}" onclick="selectOption(this)">
+                        <span class="option-text">${opt.text}</span>
+                        <div class="option-indicator"></div>
+                    </div>
+                `;
+            });
+
+            // Reset UI components
+            document.getElementById('explanation-box').style.display = 'none';
+            
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.disabled = true;
+            nextBtn.textContent = currentMode === 'study' ? 'Valider la réponse' : 'Question suivante';
+
+            if (currentMode === 'exam') {
+                resetTimer();
+            }
+        }
+
+        function selectOption(element) {
+            const options = document.querySelectorAll('.option-card');
+            options.forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            document.getElementById('next-btn').disabled = false;
+        }
+
+        function submitOrNext() {
+            const nextBtn = document.getElementById('next-btn');
+            const selectedOpt = document.querySelector('.option-card.selected');
+            const selectedOriginalIdx = selectedOpt ? parseInt(selectedOpt.dataset.originalIdx) : null;
+
+            if (currentMode === 'study') {
+                if (nextBtn.textContent === 'Valider la réponse') {
+                    validateAnswer(selectedOriginalIdx);
+                } else {
+                    goToNextQuestion();
+                }
+            } else {
+                validateAnswer(selectedOriginalIdx);
+            }
+        }
+
+        function validateAnswer(selectedOriginalIdx) {
+            const questionObj = activeQuestions[currentQuestionIndex];
+            const isCorrect = selectedOriginalIdx === questionObj.correct;
+
+            // Save results
+            results.push({
+                questionObj: questionObj,
+                selectedOriginalIdx: selectedOriginalIdx,
+                isCorrect: isCorrect,
+                currentMappedOptions: [...currentMappedOptions]
+            });
+
+            if (currentMode === 'study') {
+                clearInterval(examTimerInterval);
+                
+                // Highlight choices based on original index
+                const options = document.querySelectorAll('.option-card');
+                options.forEach(opt => {
+                    const origIdx = parseInt(opt.dataset.originalIdx);
+                    opt.classList.add('disabled');
+                    
+                    if (origIdx === questionObj.correct) {
+                        opt.classList.add('correct');
+                    } else if (origIdx === selectedOriginalIdx) {
+                        opt.classList.add('incorrect');
+                    }
+                });
+
+                // Display explanation
+                const expBox = document.getElementById('explanation-box');
+                const expText = document.getElementById('explanation-text');
+                expText.textContent = questionObj.explanation;
+                expBox.style.display = 'block';
+
+                // Sound effect
+                if (isCorrect) {
+                    playSound('correct');
+                } else {
+                    playSound('incorrect');
+                }
+
+                // Change button state
+                const nextBtn = document.getElementById('next-btn');
+                nextBtn.textContent = currentQuestionIndex === activeQuestions.length - 1 ? 'Voir le bilan' : 'Question suivante';
+            } else {
+                // Exam Mode goes directly to next
+                goToNextQuestion();
+            }
+        }
+
+        function goToNextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < activeQuestions.length) {
+                showQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            clearInterval(examTimerInterval);
+            
+            // Switch views
+            document.getElementById('quiz-view').classList.remove('active');
+            document.getElementById('results-view').classList.add('active');
+
+            // Compute metrics
+            const score = results.filter(r => r.isCorrect).length;
+            const total = results.length;
+            const percentage = Math.round((score / total) * 100);
+
+            // Display Score numbers
+            document.getElementById('score-display').textContent = `${score}/${total}`;
+            document.getElementById('score-percentage').textContent = `${percentage}%`;
+
+            // Draw circular progress bar
+            const ringCircle = document.getElementById('score-progress');
+            const circumference = 2 * Math.PI * 70; // 439.8
+            const strokeDashoffset = circumference - (percentage / 100) * circumference;
+            ringCircle.style.strokeDasharray = circumference;
+            ringCircle.style.strokeDashoffset = strokeDashoffset;
+
+            // Appreciation
+            const appreciation = document.getElementById('result-appreciation');
+            if (percentage === 100) {
+                appreciation.textContent = "Score Parfait ! Félicitations !";
+                appreciation.style.color = "var(--success)";
+                playSound('fanfare');
+            } else if (percentage >= 80) {
+                appreciation.textContent = "Excellent travail, vous êtes prêt !";
+                appreciation.style.color = "var(--success)";
+                playSound('fanfare');
+            } else if (percentage >= 50) {
+                appreciation.textContent = "Bien, mais quelques révisions sont conseillées.";
+                appreciation.style.color = "var(--warning)";
+                playSound('correct');
+            } else {
+                appreciation.textContent = "Attention, reprenez vos livrets de cours.";
+                appreciation.style.color = "var(--accent)";
+                playSound('incorrect');
+            }
+
+            // Time calculation
+            const endTime = new Date();
+            const elapsedMs = endTime - startTime;
+            const min = Math.floor(elapsedMs / 60000);
+            const sec = Math.floor((elapsedMs % 60000) / 1000);
+            document.getElementById('stat-time').textContent = `${min}m ${sec}s`;
+
+            // Other stats
+            document.getElementById('stat-correct').textContent = score;
+            document.getElementById('stat-incorrect').textContent = total - score;
+
+            // Review failed questions
+            const reviewSection = document.getElementById('review-section');
+            const reviewList = document.getElementById('review-list');
+            const failedResults = results.filter(r => !r.isCorrect);
+
+            if (failedResults.length > 0) {
+                reviewSection.style.display = 'block';
+                reviewList.innerHTML = '';
+
+                failedResults.forEach(res => {
+                    const qObj = res.questionObj;
+                    const selectedText = res.selectedOriginalIdx !== null ? qObj.options[res.selectedOriginalIdx] : "*(Aucune réponse ou temps écoulé)*";
+                    const correctText = qObj.options[qObj.correct];
+
+                    reviewList.innerHTML += `
+                        <div class="review-card">
+                            <div class="review-question-header">
+                                <span class="review-module">${qObj.module}</span>
+                            </div>
+                            <div class="review-question-text">${qObj.question}</div>
+                            <div class="review-choices">
+                                <div class="review-choice user-wrong"><strong>Votre réponse :</strong> ${selectedText}</div>
+                                <div class="review-choice correct-ans"><strong>Réponse correcte :</strong> ${correctText}</div>
+                            </div>
+                            <div class="review-explanation">
+                                <strong>Explication du cours :</strong> ${qObj.explanation}
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                reviewSection.style.display = 'none';
+            }
+        }
+
+        function restartQuiz() {
+            document.getElementById('results-view').classList.remove('active');
+            document.getElementById('welcome-view').classList.add('active');
+            playSound('correct');
+        }
+    </script>
+</body>
+</html>
