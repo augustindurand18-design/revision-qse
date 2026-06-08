@@ -3447,20 +3447,8 @@
             const error = document.getElementById('profile-modal-error');
             const name = input.value.trim();
             
-            if (name.length === 0) {
-                error.textContent = "Le nom ne peut pas être vide.";
-                error.style.display = 'block';
-                return;
-            }
-            
-            if (name.length > 15) {
-                error.textContent = "Le nom doit faire moins de 15 caractères.";
-                error.style.display = 'block';
-                return;
-            }
-            
-            if (profiles.some(p => p.name.toLowerCase() === name.toLowerCase())) {
-                error.textContent = "Ce profil existe déjà.";
+            if (name.length < 3) {
+                error.textContent = "Le pseudo doit contenir au moins 3 caractères.";
                 error.style.display = 'block';
                 return;
             }
@@ -3654,6 +3642,11 @@
             setupAudioToggle();
             loadProfiles();
             populateModulesList();
+            
+            // Ouvrir automatiquement le formulaire de création de profil à la première visite
+            if (profiles.length === 0) {
+                showCreateProfileModal();
+            }
         });
 
         function setupAudioToggle() {
