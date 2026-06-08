@@ -3361,13 +3361,13 @@
                 badge.textContent = "En ligne";
                 badge.classList.add('online');
                 infoFooter.style.display = 'block';
-                infoFooter.innerHTML = `🌐 <strong>Classement public connecté</strong>.<br>Chaque partie terminée envoie ton score à la base de données partagée de Supabase.`;
+                infoFooter.innerHTML = `🌐 <strong>Classement public connecté</strong>.<br>Chaque partie terminée envoie ton score à la base de données partagée.`;
                 fetchGlobalLeaderboard();
             } else {
                 badge.textContent = "Local";
                 badge.classList.remove('online');
                 infoFooter.style.display = 'block';
-                infoFooter.innerHTML = `💾 <strong>Classement local uniquement</strong>.<br>Pour partager tes scores avec ton pote, crée un projet gratuit sur <a href="https://supabase.com" target="_blank" style="color:var(--secondary); text-decoration:underline;">Supabase.com</a> et renseigne les clés au début du code JavaScript.`;
+                infoFooter.innerHTML = `💾 <strong>Classement local uniquement</strong>.<br>Pour partager tes scores avec ton pote, configure une base de données partagée et renseigne les clés au début du code JavaScript.`;
                 renderLocalLeaderboard();
             }
         }
