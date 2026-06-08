@@ -801,13 +801,16 @@
 
         /* Audio controls floating */
         .audio-toggle {
-            position: absolute;
+            position: fixed;
             top: 20px;
             right: 20px;
-            background: rgba(255, 255, 255, 0.04);
+            z-index: 100;
+            background: var(--glass-bg);
             border: 1px solid var(--glass-border);
-            width: 36px;
-            height: 36px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -815,6 +818,7 @@
             cursor: pointer;
             color: var(--text-muted);
             transition: var(--transition);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         .audio-toggle:hover {
