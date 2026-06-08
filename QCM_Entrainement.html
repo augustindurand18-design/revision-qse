@@ -1371,6 +1371,37 @@
             transform: scale(1.1);
         }
 
+        .badge-status {
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+            color: var(--text-muted);
+        }
+        
+        .badge-status.online {
+            border-color: rgba(20, 184, 166, 0.25);
+            background: rgba(20, 184, 166, 0.1);
+            color: var(--secondary);
+            box-shadow: 0 0 8px rgba(20, 184, 166, 0.1);
+        }
+
+        /* Card footer info styling */
+        .info-card-footer {
+            margin-top: 15px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+            background: rgba(255,255,255,0.02);
+            border: 1px dashed var(--glass-border);
+            padding: 10px 14px;
+            border-radius: 10px;
+        }
+
         /* Additional Media Queries for Profile widgets */
         @media (max-width: 600px) {
             .stats-overview-grid {
@@ -1522,14 +1553,20 @@
 
                     <div class="stats-detailed-grid">
                         <div class="leaderboard-container">
-                            <div class="section-title-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-                                Classement Local (Top 10)
+                            <div class="section-title-sm" style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="display: flex; align-items: center; gap: 8px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                                    Classement des scores
+                                </span>
+                                <span class="badge-status" id="leaderboard-type-badge">Local</span>
                             </div>
                             <div style="overflow-x: auto;">
                                 <table class="leaderboard-table" id="leaderboard-body">
                                     <!-- Populated dynamically -->
                                 </table>
+                            </div>
+                            <div class="info-card-footer" id="leaderboard-info-footer" style="display: none;">
+                                <!-- Populated dynamically -->
                             </div>
                         </div>
 
@@ -3005,6 +3042,11 @@
     }
 ];
 
+        // CONFIGURATION CLOUD SUPABASE (Pour le classement public en ligne)
+        // Remplir ces valeurs après avoir créé un projet gratuit sur https://supabase.com
+        const SUPABASE_URL = ""; 
+        const SUPABASE_ANON_KEY = "";
+
         // State variables
         let currentMode = 'study'; // 'study' or 'exam'
         let selectedModules = [];
@@ -3253,11 +3295,76 @@
         }
 
         function renderLeaderboard() {
+            const badge = document.getElementById('leaderboard-type-badge');
+            const infoFooter = document.getElementById('leaderboard-info-footer');
+            
+            const isConfigured = (SUPABASE_URL.trim().length > 0 && SUPABASE_ANON_KEY.trim().length > 0);
+            
+            if (isConfigured) {
+                badge.textContent = "En ligne";
+                badge.classList.add('online');
+                infoFooter.style.display = 'block';
+                infoFooter.innerHTML = `🌐 <strong>Classement public connecté</strong>.<br>Chaque partie terminée envoie ton score à la base de données partagée de Supabase.`;
+                fetchGlobalLeaderboard();
+            } else {
+                badge.textContent = "Local";
+                badge.classList.remove('online');
+                infoFooter.style.display = 'block';
+                infoFooter.innerHTML = `💾 <strong>Classement local uniquement</strong>.<br>Pour partager tes scores avec ton pote, crée un projet gratuit sur <a href="https://supabase.com" target="_blank" style="color:var(--secondary); text-decoration:underline;">Supabase.com</a> et renseigne les clés au début du code JavaScript.`;
+                renderLocalLeaderboard();
+            }
+        }
+
+        function renderLeaderboardTable(runs, isGlobal) {
             const body = document.getElementById('leaderboard-body');
             body.innerHTML = '';
             
-            let allScores = [];
+            if (runs.length === 0) {
+                body.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding: 20px 0;">Aucun score enregistré</td></tr>';
+                return;
+            }
             
+            body.innerHTML = `
+                <tr>
+                    <th style="width: 10%;">#</th>
+                    <th style="width: 45%;">Profil</th>
+                    <th style="width: 25%;">Score</th>
+                    <th style="width: 20%;">Temps</th>
+                </tr>
+            `;
+            
+            runs.forEach((run, idx) => {
+                let isCurrentProfile = false;
+                if (isGlobal) {
+                    isCurrentProfile = activeProfile && (run.username.toLowerCase() === activeProfile.name.toLowerCase());
+                } else {
+                    isCurrentProfile = activeProfile && (run.profileId === activeProfile.id);
+                }
+                
+                const highlightClass = isCurrentProfile ? 'class="highlight"' : '';
+                const scoreVal = run.score;
+                const totalVal = run.total;
+                const pctVal = run.percentage !== undefined ? run.percentage : run.pct;
+                const timeSec = run.time_seconds !== undefined ? run.time_seconds : run.timeSeconds;
+                
+                const min = Math.floor(timeSec / 60);
+                const sec = timeSec % 60;
+                const timeStr = `${min}m ${sec}s`;
+                const displayName = isGlobal ? run.username : run.profileName;
+                
+                body.innerHTML += `
+                    <tr ${highlightClass}>
+                        <td><strong>${idx + 1}</strong></td>
+                        <td>${displayName}</td>
+                        <td>${scoreVal}/${totalVal} (${pctVal}%)</td>
+                        <td>${timeStr}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        function renderLocalLeaderboard() {
+            let allScores = [];
             profiles.forEach(p => {
                 try {
                     const storedHistory = localStorage.getItem(`qse_history_${p.id}`);
@@ -3285,35 +3392,36 @@
             });
             
             const top10 = allScores.slice(0, 10);
+            renderLeaderboardTable(top10, false);
+        }
+
+        function fetchGlobalLeaderboard() {
+            const body = document.getElementById('leaderboard-body');
+            body.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 20px 0;"><span style="color:var(--secondary);">Chargement du classement en ligne...</span></td></tr>';
             
-            if (top10.length === 0) {
-                body.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding: 20px 0;">Aucun score enregistré</td></tr>';
-                return;
-            }
+            const url = `${SUPABASE_URL}/rest/v1/qse_scores?select=*&order=percentage.desc,time_seconds.asc&limit=10`;
             
-            body.innerHTML = `
-                <tr>
-                    <th style="width: 10%;">#</th>
-                    <th style="width: 45%;">Profil</th>
-                    <th style="width: 25%;">Score</th>
-                    <th style="width: 20%;">Temps</th>
-                </tr>
-            `;
-            
-            top10.forEach((run, idx) => {
-                const highlightClass = (activeProfile && run.profileId === activeProfile.id) ? 'class="highlight"' : '';
-                const min = Math.floor(run.timeSeconds / 60);
-                const sec = run.timeSeconds % 60;
-                const timeStr = `${min}m ${sec}s`;
-                
-                body.innerHTML += `
-                    <tr ${highlightClass}>
-                        <td><strong>${idx + 1}</strong></td>
-                        <td>${run.profileName}</td>
-                        <td>${run.score}/${run.total} (${run.pct}%)</td>
-                        <td>${timeStr}</td>
-                    </tr>
-                `;
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'apikey': SUPABASE_ANON_KEY,
+                    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(res => {
+                if (!res.ok) throw new Error("Erreur lors de la récupération des scores");
+                return res.json();
+            })
+            .then(data => {
+                renderLeaderboardTable(data, true);
+            })
+            .catch(err => {
+                console.error("Supabase Error:", err);
+                body.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--accent); padding: 15px 0;">Impossible de charger le classement en ligne.<br><span style="font-size:0.75rem; color:var(--text-muted);">Affichage du classement local de secours.</span></td></tr>';
+                setTimeout(() => {
+                    renderLocalLeaderboard();
+                }, 2000);
             });
         }
 
@@ -3500,6 +3608,45 @@
             });
             
             localStorage.setItem(`qse_mastery_${profileId}`, JSON.stringify(mastery));
+
+            // Envoi en ligne si Supabase est configuré
+            pushScoreToSupabase(score, total, timeSeconds);
+        }
+
+        function pushScoreToSupabase(score, total, timeSeconds) {
+            const isConfigured = (SUPABASE_URL.trim().length > 0 && SUPABASE_ANON_KEY.trim().length > 0);
+            if (!isConfigured || !activeProfile) return;
+            
+            const selectedModulesNames = [...new Set(activeQuestions.map(q => q.module))];
+            const pct = Math.round((score / total) * 100);
+            
+            const payload = {
+                username: activeProfile.name,
+                score: score,
+                total: total,
+                percentage: pct,
+                time_seconds: timeSeconds,
+                mode: currentMode,
+                modules: selectedModulesNames
+            };
+            
+            fetch(`${SUPABASE_URL}/rest/v1/qse_scores`, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_ANON_KEY,
+                    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=minimal'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(res => {
+                if (!res.ok) throw new Error("Erreur de sauvegarde en ligne");
+                console.log("Score pushed successfully to Supabase");
+            })
+            .catch(err => {
+                console.error("Failed to push score to Supabase:", err);
+            });
         }
 
         // Initialize App
