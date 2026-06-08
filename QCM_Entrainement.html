@@ -919,7 +919,33 @@
                 padding: 14px;
                 font-size: 0.85rem;
             }
+            
+            /* Responsive modal adjustments */
+            .modal-card {
+                padding: 20px;
+                border-radius: 16px;
+            }
+            .modal-backdrop {
+                padding: 15px 10px;
+            }
+            #modal-modules-list {
+                max-height: 130px;
+            }
+            .modal-setup-body {
+                gap: 12px;
+            }
+            .modal-setup-body .settings-section {
+                margin-bottom: 0;
+            }
+            .modal-setup-body .question-count-selector {
+                padding: 12px;
+                margin-bottom: 0;
+            }
+            .modal-title {
+                margin-bottom: 12px;
+            }
         }
+
 
         /* Profile & Tab Layout */
         .profile-header-card {
@@ -1215,6 +1241,8 @@
             display: none;
             justify-content: center;
             align-items: center;
+            overflow-y: auto; /* Allow scrolling when modal content is too tall */
+            padding: 20px 10px;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -1232,8 +1260,16 @@
             padding: 30px;
             width: 90%;
             max-width: 400px;
+            margin: auto; /* Safe vertical centering for scrollable containers */
             transform: scale(0.9);
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .modal-setup-body {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            text-align: left;
         }
         
         .modal-backdrop.active .modal-card {
@@ -1672,7 +1708,7 @@
     <div class="modal-backdrop" id="test-setup-modal">
         <div class="modal-card" style="max-width: 550px;">
             <h3 class="modal-title">Configurer le test</h3>
-            <div class="modal-body" style="display: flex; flex-direction: column; gap: 20px; text-align: left;">
+            <div class="modal-body modal-setup-body">
                 
                 <!-- Mode Selection -->
                 <div class="settings-section">
